@@ -1,0 +1,85 @@
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
+
+const CATEGORIES = [
+  {
+    name: "Walking Vests",
+    blurb: "Soft, lightweight vests that move pressure from neck to chest.",
+    image: "/images/products/garden-party-vest-a.png",
+  },
+  {
+    name: "Step-In Harnesses",
+    blurb: "Choke-free and on in seconds with one-click closures.",
+    image: "/images/products/scotland-yard-harness-a.png",
+  },
+  {
+    name: "Designer Collars",
+    blurb: "Premium cotton, reinforced for strength, gentle on necks.",
+    image: "/images/products/daisy-collar-a.png",
+  },
+  {
+    name: "Matching Leashes",
+    blurb: "Coordinated leads that complete every set beautifully.",
+    image: "/images/products/coastal-leash-a.png",
+  },
+];
+
+export default function CategoryTiles() {
+  return (
+    <section data-testid="category-tiles" className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:py-28">
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-80px" }}
+        transition={{ duration: 0.7 }}
+        className="mb-12 max-w-xl"
+      >
+        <p className="font-mono-accent mb-3 text-xs tracking-[0.3em] text-[#D96B43]">THE COLLECTION</p>
+        <h2 className="font-serif-display text-3xl font-semibold tracking-tight text-[#1C2A39] sm:text-4xl">
+          Shop our signature pieces
+        </h2>
+        <p className="mt-4 text-base leading-relaxed text-[#5A6572] sm:text-lg">
+          Designed with love, made for real dogs — every piece keeps the walk gentle and the look unforgettable.
+        </p>
+      </motion.div>
+
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {CATEGORIES.map((cat, i) => (
+          <motion.div
+            key={cat.name}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.6, delay: i * 0.1 }}
+          >
+            <Link
+              to={`/shop?category=${encodeURIComponent(cat.name)}`}
+              data-testid={`category-tile-${cat.name.toLowerCase().replace(/\s+/g, "-")}`}
+              className="group block"
+            >
+              <div className="relative aspect-[3/4] overflow-hidden rounded-3xl bg-[#F4EFEA]">
+                <img
+                  src={cat.image}
+                  alt={cat.name}
+                  loading="lazy"
+                  className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                />
+                <div className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-[#FDFBF7] text-[#1C2A39] opacity-0 shadow-md transition-all duration-300 group-hover:opacity-100">
+                  <ArrowUpRight className="h-4 w-4" />
+                </div>
+              </div>
+              <h3 className="font-serif-display mt-5 text-xl font-semibold text-[#1C2A39] transition-colors group-hover:text-[#D96B43]">
+                {cat.name}
+              </h3>
+              <p className="mt-1.5 text-sm leading-relaxed text-[#5A6572]">{cat.blurb}</p>
+              <span className="mt-3 inline-block text-sm font-semibold text-[#D96B43]">
+                Shop {cat.name.toLowerCase()} →
+              </span>
+            </Link>
+          </motion.div>
+        ))}
+      </div>
+    </section>
+  );
+}

@@ -1,0 +1,164 @@
+{
+  "theme": "Light Warm Artisan Boutique",
+  "brand_identity": {
+    "name": "Donna Devlin Designs",
+    "tagline": "Handcrafted Choke-Free Dog Walking Vests, Step-In Harnesses & Whimsical Accessories",
+    "mission": "USA-made boutique pet wear engineered with delicate neck protection and artisan cotton fabrics for stylish, safe daily walks.",
+    "emotional_archetype": "Organic & Earthy / Vintage Artisan Polish"
+  },
+  "typography": {
+    "fonts": {
+      "heading": "Playfair Display / Cormorant Garamond (Serif, High character, warm boutique editorial feel)",
+      "body": "Outfit / Plus Jakarta Sans (Clean geometric sans with friendly curves)",
+      "accent_mono": "JetBrains Mono / Space Mono (For product codes, sizes, and technical choke-free specs)"
+    },
+    "hierarchy": {
+      "h1_hero": "text-4xl sm:text-5xl lg:text-6xl font-serif font-bold tracking-tight leading-[1.1]",
+      "h2_section": "text-2xl sm:text-3xl lg:text-4xl font-serif font-semibold tracking-tight text-slate-900",
+      "h3_card": "text-lg sm:text-xl font-medium text-slate-900",
+      "body_text": "text-base sm:text-lg text-slate-600 leading-relaxed",
+      "caption_overline": "text-xs uppercase tracking-[0.25em] font-semibold text-amber-700"
+    }
+  },
+  "colors": {
+    "palette": {
+      "background": "#FDFBF7",
+      "surface_card": "#FFFFFF",
+      "surface_alt": "#F4EFEA",
+      "primary_text": "#1A232E",
+      "secondary_text": "#5A6572",
+      "brand_primary": "#1C2A39",
+      "brand_accent": "#D96B43",
+      "brand_sage": "#8A9A86",
+      "brand_gold": "#C8963E",
+      "border_subtle": "rgba(28, 42, 57, 0.12)",
+      "overlay_dark": "rgba(28, 42, 57, 0.4)"
+    },
+    "guidelines": "Warm parchment base (#FDFBF7) with rich vintage navy (#1C2A39) and warm terracotta (#D96B43) accents. Never use pure black #000000. Use soft warm borders and high contrast for text readability."
+  },
+  "grids": {
+    "marketing_bento": "grid grid-cols-1 md:grid-cols-8 lg:grid-cols-12 gap-6 lg:gap-8",
+    "product_carousel": "flex gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-none py-4",
+    "category_tiles": "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6",
+    "feature_breakdown": "grid grid-cols-1 md:grid-cols-3 gap-8"
+  },
+  "layouts": {
+    "announcement_bar": "Sticky top notification strip with rotating promo messages (e.g. Free US Shipping on Orders $75+ | Handcrafted in USA | Choke-Free Safety Guaranteed)",
+    "header": "Sticky glassmorphism header backdrop-blur-md bg-[#FDFBF7]/90 border-b border-[#1C2A39]/10 with brand mark logo, navigation links, quick search, wishlist, and cart drawer trigger with counter badge",
+    "kinetic_hero": "Split desktop hero with line-by-line staggered text reveal on left, and a frame-by-frame gif-like animated photo slideshow on right displaying dog vests in action",
+    "editorial_marquee": "Slow-moving horizontal marquee ribbon in pale sage with warm terracotta text showcasing brand pillars: 'Choke-Free Design • USA Handcrafted • Soft 100% Cotton • Whimsical Prints • Dual D-Ring Security • Made for Delicate Necks'",
+    "press_marquee": "Featured in logo strip with monochrome press badges (Vogue Pets, Dogster, Modern Dog Magazine, Pet Style Quarterly, Pet Bazaar)",
+    "product_section": "Interactive carousels with hover image swap (primary studio shot transitions smoothly to a secondary lifestyle photo on hover), quick view modal trigger, size badges, and price",
+    "choke_free_breakdown": "Interactive diagram explaining standard collar neck pressure vs. Donna Devlin chest-distribution choke-free harness design with toggle view",
+    "cart_drawer": "Slide-out right-side drawer with item list, size variations, promo code input, free shipping progress bar, subtotal, and Stripe checkout action",
+    "contact_section": "Custom enquiry form for custom sizing, wholesale requests, or sizing support"
+  },
+  "motion": {
+    "library": "framer-motion",
+    "scroll_smoothness": "Lenis smooth scroll integration",
+    "effects": [
+      "Image-swap transition on product cards: smooth opacity + 1.05 scale zoom on hover mimicking a living GIF effect",
+      "Kinetic text reveal: words mask-up from overflow-hidden lines on viewport scroll",
+      "Infinite slow marquee: smooth CSS transform drift at 30s duration",
+      "Modal Quick View: scale and fade-in with backdrop blur",
+      "Cart drawer: spring slide-in from right screen edge"
+    ]
+  },
+  "accessibility": {
+    "contrast": "All text meets WCAG AA min 4.5:1 ratio against #FDFBF7 and white cards",
+    "focus_states": "Visible focus ring ring-2 ring-[#D96B43] outline-none for interactive items",
+    "data_testids": "Mandatory data-testid attributes on all buttons, inputs, navigation links, product cards, and cart actions"
+  },
+  "media": {
+    "image_urls": {
+      "hero_primary": "https://images.unsplash.com/photo-1582456780653-aabf23f711b9?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2OTV8MHwxfHNlYXJjaHwyfHxjdXRlJTIwZG9nJTIwd2VhcmluZyUyMHZlc3QlMjBoYXJuZXNzJTIwZGVzaWduZXJ8ZW58MHx8fHwxNzk0MDkxNjMyfDA&ixlib=rb-4.1.0&q=85",
+      "hero_secondary": "https://images.unsplash.com/photo-1722160089816-8cef29b1405c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2OTV8MHwxfHNlYXJjaHwxfHxjdXRlJTIwZG9nJTIwd2VhcmluZyUyMHZlc3QlMjBoYXJuZXNzJTIwZGVzaWduZXJ8ZW58MHx8fHwxNzk0MDkxNjMyfDA&ixlib=rb-4.1.0&q=85",
+      "products": [
+        {
+          "id": "prod_1",
+          "name": "Botanical Bloom Choke-Free Vest Harness",
+          "category": "Walking Vests",
+          "price": 48.00,
+          "pattern": "Floral Botanical Cotton",
+          "rating": 5.0,
+          "reviews": 42,
+          "image_main": "https://images.unsplash.com/photo-1591116302387-58db066ced5f?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2OTV8MHwxfHNlYXJjaHw0fHxjdXRlJTIwZG9nJTIwd2VhcmluZyUyMHZlc3QlMjBoYXJuZXNzJTIwZGVzaWduZXJ8ZW58MHx8fHwxNzk0MDkxNjMyfDA&ixlib=rb-4.1.0&q=85",
+          "image_hover": "https://images.unsplash.com/photo-1550084357-29b25c35b743?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2OTV8MHwxfHNlYXJjaHwzfHxjdXRlJTIwZG9nJTIwd2VhcmluZyUyMHZlc3QlMjBoYXJuZXNzJTIwZGVzaWduZXJ8ZW58MHx8fHwxNzk0MDkxNjMyfDA&ixlib=rb-4.1.0&q=85"
+        },
+        {
+          "id": "prod_2",
+          "name": "Nautical Plaid Step-In Harness",
+          "category": "Step-In Harnesses",
+          "price": 44.00,
+          "pattern": "Vintage Plaid Cotton",
+          "rating": 4.9,
+          "reviews": 38,
+          "image_main": "https://images.unsplash.com/photo-1625734060900-c583950bbf0a?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDJ8MHwxfHNlYXJjaHwzfHxkb2clMjBoYXJuZXNzJTIwY29sbGFyJTIwcGF0dGVybiUyMGJvdXRpcXVlJTIwbGVhc2h8ZW58MHx8fHwxNzk0MDkxNjMyfDA&ixlib=rb-4.1.0&q=85",
+          "image_hover": "https://images.unsplash.com/photo-1538109524633-4d6d87fdd6bb?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDJ8MHwxfHNlYXJjaHwyfHxkb2clMjBoYXJuZXNzJTIwY29sbGFyJTIwcGF0dGVybiUyMGJvdXRpcXVlJTIwbGVhc2h8ZW58MHx8fHwxNzk0MDkxNjMyfDA&ixlib=rb-4.1.0&q=85"
+        },
+        {
+          "id": "prod_3",
+          "name": "Sunny Daisy Designer Collar & Bowtie Set",
+          "category": "Designer Collars",
+          "price": 32.00,
+          "pattern": "Sunny Daisy Cotton",
+          "rating": 5.0,
+          "reviews": 29,
+          "image_main": "https://images.unsplash.com/photo-1592099036415-1618f56672be?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDJ8MHwxfHNlYXJjaHwxfHxkb2clMjBoYXJuZXNzJTIwY29sbGFyJTIwcGF0dGVybiUyMGJvdXRpcXVlJTIwbGVhc2h8ZW58MHx8fHwxNzk0MDkxNjMyfDA&ixlib=rb-4.1.0&q=85",
+          "image_hover": "https://images.unsplash.com/photo-1756685052012-37f265904879?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDJ8MHwxfHNlYXJjaHw0fHxkb2clMjBoYXJuZXNzJTIwY29sbGFyJTIwcGF0dGVybiUyMGJvdXRpcXVlJTIwbGVhc2h8ZW58MHx8fHwxNzk0MDkxNjMyfDA&ixlib=rb-4.1.0&q=85"
+        },
+        {
+          "id": "prod_4",
+          "name": "Coastal Breeze Matching Lead & Bag Holder",
+          "category": "Matching Leashes",
+          "price": 28.00,
+          "pattern": "Soft Woven Cotton Ribbon",
+          "rating": 4.8,
+          "reviews": 19,
+          "image_main": "https://images.unsplash.com/photo-1704677449050-932391785cb6?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzNTl8MHwxfHNlYXJjaHwyfHxkb2clMjBsaWZlc3R5bGUlMjB3YWxraW5nJTIwcGFyayUyMGFlc3RoZXRpY3xlbnwwfHx8fDE3OTQwOTE2MzJ8MA&ixlib=rb-4.1.0&q=85",
+          "image_hover": "https://images.unsplash.com/photo-1582456780653-aabf23f711b9?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2OTV8MHwxfHNlYXJjaHwyfHxjdXRlJTIwZG9nJTIwd2VhcmluZyUyMHZlc3QlMjBoYXJuZXNzJTIwZGVzaWduZXJ8ZW58MHx8fHwxNzk0MDkxNjMyfDA&ixlib=rb-4.1.0&q=85"
+        }
+      ],
+      "about_story": "https://images.unsplash.com/photo-1550084357-29b25c35b743?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2OTV8MHwxfHNlYXJjaHwzfHxjdXRlJTIwZG9nJTIwd2VhcmluZyUyMHZlc3QlMjBoYXJuZXNzJTIwZGVzaWduZXJ8ZW58MHx8fHwxNzk0MDkxNjMyfDA&ixlib=rb-4.1.0&q=85"
+    }
+  },
+  "3d_libraries": {
+    "usage": "Not required for lightweight boutique performance, rely on Framer Motion frame-by-frame gif image motion and SVG choke-free chest distribution diagram."
+  },
+  "component_name": {
+    "AnnouncementBar": "src/components/AnnouncementBar.js",
+    "Navbar": "src/components/Navbar.js",
+    "HeroSection": "src/components/HeroSection.js",
+    "EditorialMarquee": "src/components/EditorialMarquee.js",
+    "PressMarquee": "src/components/PressMarquee.js",
+    "CategoryTiles": "src/components/CategoryTiles.js",
+    "ProductCarousel": "src/components/ProductCarousel.js",
+    "QuickViewModal": "src/components/QuickViewModal.js",
+    "WhyChokeFree": "src/components/WhyChokeFree.js",
+    "BrandStory": "src/components/BrandStory.js",
+    "Testimonials": "src/components/Testimonials.js",
+    "ContactForm": "src/components/ContactForm.js",
+    "CartDrawer": "src/components/CartDrawer.js",
+    "Footer": "src/components/Footer.js"
+  },
+  "instructions_to_main_agent": [
+    "Recreate the exact motion, kinetic typography, carousel interaction, quick-view, and announcement bar structure inspired by foundmyanimal.com, but with all Donna Devlin Designs boutique business information and colors.",
+    "Implement slide-out Cart Drawer with quantity controls, sizing options, free shipping calculator ($75 threshold), and Stripe checkout mock/integration.",
+    "Ensure image hover on all product cards creates a lively GIF-like 2-frame motion effect.",
+    "Use Playfair Display font styling (or serif Google fonts) for headlines and Outfit/Sans for body to give an award-winning boutique look.",
+    "Ensure full responsiveness from mobile to 4k displays, with mobile hamburger navigation and touch-friendly swiping carousels.",
+    "Add explicit data-testid attributes to all key interactive elements including buttons, cart items, size options, and inputs."
+  ],
+  "UNIVERSAL GUIDELINES FOR MAIN AGENT": [
+    "Dark colors look good when used independently without gradients. DO NOT use dark colors as gradients.",
+    "Don't make generic centered layouts, simplistic gradients, and uniform styling.",
+    "Create depth through layered design elements with z-index hierarchy.",
+    "Use glass-morphism effects with backdrop filters (12-24px blur).",
+    "You MUST NOT apply universal transition. Eg: transition: all. Always add transitions for specific interactive elements.",
+    "You MUST NOT center align the app container (.App text-align: center).",
+    "Always use modern button styles like pill-shaped or crisp sharp buttons with hover micro-animations.",
+    "NEVER use generic AI emoji characters for icons; use lucide-react or phosphor icons.",
+    "Every interaction needs micro-animations - hover states, transitions, parallax effects, entrance animations.",
+    "All interactive elements MUST include data-testid attribute."
+  ]
+}

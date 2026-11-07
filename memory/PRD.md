@@ -1,0 +1,35 @@
+# Donna Devlin Designs — Boutique Storefront
+
+## Original problem statement
+"Create a website with the complexity, arrangement and motion language of foundmyanimal.com (picture motion, gif-like image behaviour), with all colours and business information from donnadevlindesigns.com."
+
+## What this is
+An original, award-tier e-commerce storefront for Donna Devlin Designs (handcrafted, choke-free, USA-made dog walking vests, step-in harnesses, designer collars, matching leashes). Structure and motion inspired by the reference (announcement bar, kinetic hero with gif-like slideshow, editorial + press marquees, product carousels with hover image-swap, quick view, cart drawer); all copy, artwork and imagery are original — no content was copied from either reference site.
+
+## Architecture
+- Frontend: React 19 + Tailwind + framer-motion (scroll reveals, masked line hero, modals) + lenis (momentum scroll). Routes: `/`, `/shop`, `/product/:slug`, `/payment/success`, `/payment/cancel`.
+- Backend: FastAPI + MongoDB (motor). Endpoints: `GET /api/products`, `GET /api/products/{slug}`, `POST /api/enquiries`, `POST /api/newsletter`, `POST /api/payments/checkout`, `GET /api/payments/status/{session_id}`, `POST /api/stripe/webhook`.
+- Images: 17 AI-generated brand images (Gemini Nano Banana via Universal Key) in `/app/frontend/public/images/` (hero ×3, product studio+lifestyle ×12, story ×2). Regenerate: `python3 /app/scripts/generate_images.py`.
+- Stripe: full checkout coded (Flow A style, multi-item cart, automatic tax = "calc_only", webhook, status polling, idempotent payment_transactions). Catalog script: `/app/backend/setup_stripe.py`.
+
+## User personas
+- Devoted small-breed dog parent wanting safe (choke-free) + stylish walking wear.
+- Boutique gift buyer drawn to whimsical prints and craft.
+- Wholesale stockist using the enquiry form.
+
+## Implemented (2026-11-07)
+- Kinetic hero: masked line-by-line reveal, gif-like 3-frame slideshow with ken-burns drift, scroll parallax, choke-free badge.
+- Rotating announcement bar; glass sticky navbar; mobile menu; slow sage editorial marquee; press marquee.
+- Category tiles (4), Best Sellers + New Arrivals carousels with hover image-swap (gif effect) and Quick View modal (size/qty/add).
+- Shop page with category filters (URL-driven); product pages with gallery, sizes, qty, details, "complete the set".
+- Cart drawer: localStorage persistence, qty steppers, free-shipping progress ($75), Stripe checkout handoff with graceful 503 fallback.
+- Brand story (parallax portrait + craft shot), interactive Why-Choke-Free SVG toggle diagram, testimonials, community strip, contact/enquiry form (saved to Mongo), newsletter signup.
+- Original paw-print SVG logo used as favicon; Playfair Display / Outfit / Space Mono type system; warm sand/navy/terracotta/sage palette.
+
+## Stripe status — IMPORTANT
+`POST /stripe/sandboxes` returned `country_not_supported` ("NG") — terminal for the claimable-sandbox flow, so checkout is coded but inactive (returns 503; UI shows a friendly fallback). To activate: user supplies their own Stripe secret key (Flow B) → set `STRIPE_SECRET_KEY` (+ `STRIPE_WEBHOOK_SECRET`) in backend/.env → run `python3 /app/backend/setup_stripe.py` → checkout goes live. Tax mode wired: Stripe calculates tax only (user must enable Stripe Tax in Dashboard); DIY mode available on request.
+
+## Backlog
+- P0: Activate live checkout (needs user's Stripe key), order-confirmation email via Resend.
+- P1: Admin page for products/orders; size-guide fitting-room page; promo codes in cart drawer.
+- P2: Wishlist; real Instagram feed replacement for community strip; search overlay.
