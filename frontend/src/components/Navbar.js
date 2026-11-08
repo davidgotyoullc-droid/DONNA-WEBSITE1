@@ -12,11 +12,13 @@ const LINKS = [
   { label: "Fitting Room", to: "/fitting-room" },
   { label: "Store Locator", to: "/store-locator" },
   { label: "Wholesale", to: "/wholesale" },
+  { label: "About", to: "/about" },
+  { label: "Contact", to: "/contact" },
 ];
 
 const MOBILE_EXTRA = [
   { label: "Our Story", to: "/#story" },
-  { label: "Contact", to: "/#contact" },
+  { label: "Join the Pack", to: "/signup" },
 ];
 
 export default function Navbar() {
@@ -46,7 +48,7 @@ export default function Navbar() {
           <Logo />
         </Link>
 
-        <nav className="hidden items-center gap-6 lg:flex xl:gap-8" data-testid="nav-links">
+        <nav className="hidden items-center gap-5 xl:flex" data-testid="nav-links">
           {LINKS.map((link) => (
             <button
               key={link.label}
@@ -92,7 +94,7 @@ export default function Navbar() {
           <button
             data-testid="mobile-menu-button"
             onClick={() => setOpen((o) => !o)}
-            className="flex h-11 w-11 items-center justify-center rounded-full border border-[#3E2A33]/15 text-[#3E2A33] lg:hidden"
+            className="flex h-11 w-11 items-center justify-center rounded-full border border-[#3E2A33]/15 text-[#3E2A33] xl:hidden"
             aria-label="Menu"
           >
             {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -107,7 +109,7 @@ export default function Navbar() {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.25 }}
-            className="overflow-hidden border-t border-[#3E2A33]/10 lg:hidden"
+            className="overflow-hidden border-t border-[#3E2A33]/10 xl:hidden"
             data-testid="mobile-menu"
           >
             <div className="flex flex-col px-6 py-4">

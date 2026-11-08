@@ -1,12 +1,19 @@
 import asyncio
+import ipaddress
 import logging
 import os
+import re
+import secrets
 from contextlib import suppress
 from datetime import datetime, timedelta, timezone
+from html import escape
+from html.parser import HTMLParser
 from pathlib import Path
 from typing import List, Optional
+from urllib.parse import urlparse
 
 import bcrypt
+import httpx
 import jwt
 import stripe
 from bson import ObjectId
@@ -24,6 +31,92 @@ mongo_url = os.environ['MONGO_URL']
 client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ['DB_NAME']]
 
+logger = logging.getLogger(__name__)
+
+EMAIL_BASE_URL = "https://integrations.emergentagent.com"
+EMAIL_KEY = os.environ.get("EMERGENT_EMAIL_KEY", "")
+EMAIL_FROM_NAME = os.environ.get("EMAIL_FROM_NAME", "Donna Devlin Designs")
+FRONTEND_URL = os.environ.get("FRONTEND_URL", "http://localhost:3000")
+
+_SHORTENERS = ("bit.ly", "tinyurl.com", "t.co", "is.gd", "cutt.ly", "goo.gl", "rebrand.ly")
+_CRED_ASK = ("reply with your password", "reply with the code", "send your password", "cvv",
+             "send us your password", "enter your password below", "confirm your card number",
+             "your full card number", "seed phrase", "recovery phrase", "verify your card",
+             "social security number", "confirm your bank details")
+_HOSTISH = re.compile(r"\b(?:https?://)?((?:[a-z0-9-]+\.)+[a-z]{2,})", re.I)
+
+def _host_ok(host: str) -> bool:
+    if not host or "xn--" in host:
+        return False
+    try:
+        ipaddress.ip_address(host)
+        return False
+    except ValueError:
+        pass
+    return not any(host == s or host.endswith("." + s) for s in _SHORTENERS)
+
+def _same_site(shown: str, real: str) -> bool:
+    return shown == real or real.endswith("." + shown) or shown.endswith("." + real)
+
+class _EmailScan(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.tags, self.urls, self.anchors = set(), [], []
+        self._href, self._text = None, []
+    def handle_starttag(self, tag, attrs):
+        self.tags.add(tag.lower())
+        self.urls += [v for k, v in attrs if k.lower() in ("href", "src") and v]
+        if tag.lower() == "a":
+            self._href = dict((k.lower(), v) for k, v in attrs).get("href")
+            self._text = []
+    def handle_data(self, data):
+        if self._href is not None:
+            self._text.append(data)
+    def handle_endtag(self, tag):
+        if tag.lower() == "a" and self._href is not None:
+            self.anchors.append((self._href, "".join(self._text)))
+            self._href, self._text = None, []
+
+def _assert_safe_email(subject: str, html: str) -> None:
+    scan = _EmailScan(); scan.feed(html)
+    if scan.tags & {"form", "input", "textarea", "select"}:
+        raise ValueError("No forms or input fields in email (G2)")
+    body = f"{subject}\n{html}".lower()
+    for p in _CRED_ASK:
+        if p in body:
+            raise ValueError(f"Email asks the recipient for credentials: {p!r} (G2)")
+    for url in scan.urls:
+        low = url.strip().lower()
+        if low.startswith(("mailto:", "tel:", "cid:", "#")):
+            continue
+        if not low.startswith("https://"):
+            raise ValueError(f"Email links/assets must be absolute https: {url!r} (G3)")
+        host = urlparse(low).hostname or ""
+        if not _host_ok(host) or urlparse(low).username is not None:
+            raise ValueError(f"Shortened, numeric-host or credential-bearing URL: {url!r} (G3)")
+    for href, text in scan.anchors:
+        real = urlparse(href.strip().lower()).hostname or ""
+        if not real:
+            continue
+        for m in _HOSTISH.finditer(text):
+            if not _same_site(m.group(1).lower(), real):
+                raise ValueError(f"Anchor text {m.group(1)!r} != real link host {real!r} (G3)")
+
+async def send_email(*, to: str, subject: str, html: str) -> Optional[str]:
+    _assert_safe_email(subject, html)
+    if not EMAIL_KEY:
+        logger.warning("EMERGENT_EMAIL_KEY missing — email not sent")
+        return None
+    payload = {"to": [to], "subject": subject, "html": html, "from_name": EMAIL_FROM_NAME}
+    try:
+        async with httpx.AsyncClient(timeout=30) as http:
+            resp = await http.post(f"{EMAIL_BASE_URL}/api/v1/email/send", headers={"X-Email-Key": EMAIL_KEY}, json=payload)
+        resp.raise_for_status()
+        return resp.json().get("id")
+    except Exception as e:
+        logger.error("Email send error: %s", str(e))
+        return None
+
 PRODUCTS = [
     {
         "slug": "garden-party-walking-vest",
@@ -35,7 +128,7 @@ PRODUCTS = [
         "description": "Our signature choke-free walking vest in a whimsical garden floral. Soft 100% cotton wraps the chest, not the neck, so every walk is gentle, secure and beautifully dressed.",
         "details": ["100% premium cotton, pre-washed for softness", "Choke-free chest-distribution design", "Dual D-ring security", "Handcrafted in the USA", "Machine wash cold, lay flat to dry"],
         "sizes": ["XS", "S", "M", "L"],
-        "images": {"main": "/images/products/garden-party-vest-a.png", "hover": "/images/products/garden-party-vest-b.png"},
+        "images": {"main": "/images/products/garden-party-vest-a.webp", "hover": "/images/products/garden-party-vest-b.webp"},
         "tags": ["best_seller"],
         "rating": 5.0,
         "reviews": 42,
@@ -50,7 +143,7 @@ PRODUCTS = [
         "description": "A dapper step-in harness in tailored navy plaid. On in seconds with a one-click closure, pressure glides across the chest and away from delicate tracheas.",
         "details": ["Step-in design — no over-the-head struggle", "Reinforced stitching at every stress point", "Choke-free chest fit", "Handcrafted in the USA", "One-click secure buckle"],
         "sizes": ["XS", "S", "M", "L"],
-        "images": {"main": "/images/products/scotland-yard-harness-a.png", "hover": "/images/products/scotland-yard-harness-b.png"},
+        "images": {"main": "/images/products/scotland-yard-harness-a.webp", "hover": "/images/products/scotland-yard-harness-b.webp"},
         "tags": ["best_seller"],
         "rating": 4.9,
         "reviews": 38,
@@ -65,7 +158,7 @@ PRODUCTS = [
         "description": "A premium cotton collar scattered with sunny daisies, finished with a removable bow. Reinforced for strength, gentle on delicate necks, made to turn heads at the park.",
         "details": ["Premium cotton over a reinforced core", "Removable designer bow", "Brass-finish hardware", "Handcrafted in the USA", "Pairs with the Coastal Stripe leash"],
         "sizes": ["XS", "S", "M", "L"],
-        "images": {"main": "/images/products/daisy-collar-a.png", "hover": "/images/products/daisy-collar-b.png"},
+        "images": {"main": "/images/products/daisy-collar-a.webp", "hover": "/images/products/daisy-collar-b.webp"},
         "tags": ["best_seller"],
         "rating": 5.0,
         "reviews": 29,
@@ -80,7 +173,7 @@ PRODUCTS = [
         "description": "A beautifully coordinated leash in soft sage stripes with a solid brass clasp. The finishing touch to every Donna Devlin set — strong, light and lovely in the hand.",
         "details": ["5 ft length, perfectly weighted", "Solid brass swivel clasp", "Soft woven cotton ribbon", "Handcrafted in the USA", "Matches every print in the collection"],
         "sizes": ["One Size"],
-        "images": {"main": "/images/products/coastal-leash-a.png", "hover": "/images/products/coastal-leash-b.png"},
+        "images": {"main": "/images/products/coastal-leash-a.webp", "hover": "/images/products/coastal-leash-b.webp"},
         "tags": ["best_seller"],
         "rating": 4.8,
         "reviews": 19,
@@ -95,7 +188,7 @@ PRODUCTS = [
         "description": "A new-season walking vest in sweet cherry gingham. The same choke-free comfort our pups love, dressed up for picnics, patios and everything in between.",
         "details": ["100% premium cotton", "Choke-free chest-distribution design", "Dual D-ring security", "Handcrafted in the USA", "Machine wash cold"],
         "sizes": ["XS", "S", "M", "L"],
-        "images": {"main": "/images/products/cherry-picnic-vest-a.png", "hover": "/images/products/cherry-picnic-vest-b.png"},
+        "images": {"main": "/images/products/cherry-picnic-vest-a.webp", "hover": "/images/products/cherry-picnic-vest-b.webp"},
         "tags": ["new_arrival"],
         "rating": 5.0,
         "reviews": 12,
@@ -110,7 +203,7 @@ PRODUCTS = [
         "description": "Playful terracotta dots on warm ivory. Our newest step-in harness goes on in one motion and keeps pressure exactly where it belongs — across the chest.",
         "details": ["Step-in, one-click closure", "Choke-free chest fit", "Reinforced stitching", "Handcrafted in the USA", "Lightweight for tiny pups"],
         "sizes": ["XS", "S", "M", "L"],
-        "images": {"main": "/images/products/polka-wisp-harness-a.png", "hover": "/images/products/polka-wisp-harness-b.png"},
+        "images": {"main": "/images/products/polka-wisp-harness-a.webp", "hover": "/images/products/polka-wisp-harness-b.webp"},
         "tags": ["new_arrival"],
         "rating": 4.9,
         "reviews": 9,
@@ -124,6 +217,7 @@ INDEXES = {
     "payment_transactions": [IndexModel([("session_id", ASCENDING)], name="session_id", unique=True)],
     "users": [IndexModel([("email", ASCENDING)], name="email", unique=True)],
     "login_attempts": [IndexModel([("identifier", ASCENDING)], name="identifier")],
+    "password_reset_tokens": [IndexModel([("expires_at", ASCENDING)], name="expires_at", expireAfterSeconds=0)],
 }
 
 async def ensure_indexes() -> None:
@@ -260,6 +354,7 @@ async def register(req: RegisterRequest, response: Response):
         "email": email,
         "password_hash": hash_password(req.password),
         "role": "customer",
+        "dogs": [],
         "created_at": datetime.now(timezone.utc).isoformat(),
     }
     result = await db.users.insert_one(doc)
@@ -313,6 +408,74 @@ async def refresh(request: Request, response: Response):
         raise HTTPException(401, "User not found")
     response.set_cookie("access_token", create_access_token(str(user["_id"]), user["email"]), httponly=True, secure=True, samesite="none", max_age=900, path="/")
     return public_user(user)
+
+class ForgotPasswordRequest(BaseModel):
+    email: EmailStr
+
+@api_router.post("/auth/forgot-password")
+async def forgot_password(req: ForgotPasswordRequest):
+    email = req.email.lower()
+    user = await db.users.find_one({"email": email})
+    if user:
+        token = secrets.token_urlsafe(32)
+        await db.password_reset_tokens.insert_one({
+            "token": token,
+            "email": email,
+            "expires_at": datetime.now(timezone.utc) + timedelta(hours=1),
+            "used": False,
+            "created_at": datetime.now(timezone.utc).isoformat(),
+        })
+        reset_url = f"{FRONTEND_URL}/reset-password?token={token}"
+        html = (
+            '<table role="presentation" width="100%"><tr><td style="padding:24px;font-family:Arial,sans-serif">'
+            f'<p>Hi {escape(user.get("name") or "there")},</p>'
+            f'<p>We received a request to reset the password for your {escape(EMAIL_FROM_NAME)} account.</p>'
+            f'<p><a href="{reset_url}" style="display:inline-block;background:#E6007E;color:#ffffff;'
+            'padding:12px 28px;border-radius:999px;text-decoration:none;font-weight:bold">Choose a new password</a></p>'
+            '<p style="font-size:13px;color:#666">This link works once and expires in 1 hour. '
+            "If you didn't ask for it, you can ignore this email — your password stays the same.</p>"
+            f'<p style="font-size:12px;color:#888">Sent by {escape(EMAIL_FROM_NAME)}. We never ask for your password or card details by email.</p>'
+            "</td></tr></table>"
+        )
+        await send_email(to=email, subject=f"Reset your {EMAIL_FROM_NAME} password", html=html)
+    return {"ok": True, "message": "If an account exists for that email, a reset link is on its way."}
+
+class ResetPasswordRequest(BaseModel):
+    token: str
+    password: str = Field(min_length=6, max_length=128)
+
+@api_router.post("/auth/reset-password")
+async def reset_password(req: ResetPasswordRequest):
+    record = await db.password_reset_tokens.find_one({"token": req.token})
+    if not record or record.get("used") or record["expires_at"].replace(tzinfo=timezone.utc) < datetime.now(timezone.utc):
+        raise HTTPException(400, "This reset link is invalid or has expired")
+    await db.users.update_one({"email": record["email"]}, {"$set": {"password_hash": hash_password(req.password)}})
+    await db.password_reset_tokens.update_one({"token": req.token}, {"$set": {"used": True}})
+    return {"ok": True, "message": "Password updated — you can sign in now."}
+
+# ---------- Saved dog sizes ----------
+
+class DogProfile(BaseModel):
+    name: str = Field(min_length=1, max_length=60)
+    breed: str = Field(default="", max_length=80)
+    neck_inches: float = Field(gt=0, le=40)
+    girth_inches: float = Field(gt=0, le=60)
+
+class DogsRequest(BaseModel):
+    dogs: List[DogProfile] = Field(max_length=6)
+
+@api_router.get("/account/dogs")
+async def get_dogs(request: Request):
+    user = await get_current_user(request)
+    doc = await db.users.find_one({"_id": ObjectId(user["id"])}, {"dogs": 1})
+    return (doc or {}).get("dogs", [])
+
+@api_router.put("/account/dogs")
+async def put_dogs(req: DogsRequest, request: Request):
+    user = await get_current_user(request)
+    dogs = [d.model_dump() for d in req.dogs]
+    await db.users.update_one({"_id": ObjectId(user["id"])}, {"$set": {"dogs": dogs}})
+    return dogs
 
 @api_router.get("/orders")
 async def my_orders(request: Request):
@@ -434,13 +597,12 @@ app.include_router(api_router)
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
-    allow_origins=[os.environ.get("FRONTEND_URL", "http://localhost:3000")],
+    allow_origins=[FRONTEND_URL],
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
 
 @app.on_event("startup")
 async def startup():

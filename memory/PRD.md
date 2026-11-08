@@ -17,6 +17,14 @@ An original, award-tier e-commerce storefront for Donna Devlin Designs (handcraf
 - Boutique gift buyer drawn to whimsical prints and craft.
 - Wholesale stockist using the enquiry form.
 
+## Implemented (2026-11-08, v4)
+- Password reset by email (managed Resend): "Forgot password?" on sign-in → /forgot-password → branded one-time reset link email (1h expiry) → /reset-password. Tokens single-use, TTL-indexed.
+- Saved sizes ("My pups") in /account: save up to 6 dogs (name, breed, neck, girth) with automatic suggested vest/harness size. GET/PUT /api/account/dogs (auth-protected).
+- About Us page (/about) with Donna's real founder photo, beach-dog photo and fabric swatch from the brand's own library; story, craft and promise sections. Home story section now uses the real founder photo too.
+- Standalone Contact Us page (/contact) with studio details + enquiry form; About + Contact added to nav (desktop nav at xl, full list in mobile menu).
+- "See our designs in action" YouTube section on home: 4 brand videos as fast thumbnail facades, click-to-play via youtube-nocookie embeds + "Watch on YouTube" fallback links. NOTE: in-page playback cannot be verified inside the preview sandbox (YouTube blocks datacenter requests); embeds should play normally for real visitors — verify after deploy.
+- Image optimization: all 26 generated images converted PNG → sized WebP (27MB → 2.5MB total, ~10x smaller); DB product image paths updated; code references updated.
+
 ## Implemented (2026-11-08, v3)
 - Real Donna Devlin Designs brand: actual logo (from donnadevlindesigns.com) in navbar, footer, sign-in card and favicon; full palette rebrand to brand colors — magenta #E6007E, blush #FDF7FA / #FBEEF4, deep espresso #3E2A33, olive #7D8F4E; announcement bar now brand pink.
 - Motion calmed: hero flipbook 140ms→750ms with soft crossfade; category glitch 150ms→450ms with gentle crossfade, subtler jitter/scanlines.

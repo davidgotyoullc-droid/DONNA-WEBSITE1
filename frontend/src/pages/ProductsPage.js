@@ -9,7 +9,7 @@ const TYPES = [
     description:
       "Soft, lightweight vests that take pressure off the neck and onto the chest. Whimsical cotton prints, dual D-ring security, and a wrap fit that tiny pups and broad-chested dogs both love.",
     features: ["Choke-free chest-distribution design", "100% premium pre-washed cotton", "Sizes MINI through L"],
-    images: ["/images/products/garden-party-vest-b.png", "/images/products/cherry-picnic-vest-a.png"],
+    images: ["/images/products/garden-party-vest-b.webp", "/images/products/cherry-picnic-vest-a.webp"],
     to: "/shop?category=Walking%20Vests",
   },
   {
@@ -18,7 +18,7 @@ const TYPES = [
     description:
       "Choke-free designs that are as easy to put on as they are comfortable to wear. Step in, one click, and you're out the door — pressure glides across the chest, never the throat.",
     features: ["One-click closure, no over-the-head struggle", "Reinforced stitching at every stress point", "Sizes XS through L"],
-    images: ["/images/products/scotland-yard-harness-b.png", "/images/products/polka-wisp-harness-a.png"],
+    images: ["/images/products/scotland-yard-harness-b.webp", "/images/products/polka-wisp-harness-a.webp"],
     to: "/shop?category=Step-In%20Harnesses",
   },
   {
@@ -27,7 +27,7 @@ const TYPES = [
     description:
       "Premium cotton collars reinforced for strength and gentle on delicate necks — finished with removable bows and brass-finish hardware that turn a walk into an occasion.",
     features: ["Reinforced core inside soft cotton", "Removable designer bow", "Neck sizes 7″ to 29″"],
-    images: ["/images/products/daisy-collar-b.png", "/images/products/daisy-collar-c.png"],
+    images: ["/images/products/daisy-collar-b.webp", "/images/products/daisy-collar-c.webp"],
     to: "/shop?category=Designer%20Collars",
   },
   {
@@ -36,7 +36,7 @@ const TYPES = [
     description:
       "Beautifully coordinated 5-foot leashes in the same prints and palettes as our vests and collars — soft in the hand, with solid brass swivel clasps that never tangle.",
     features: ["5 ft length, two widths", "Solid brass swivel clasp", "Matches every print in the collection"],
-    images: ["/images/products/coastal-leash-b.png", "/images/products/coastal-leash-c.png"],
+    images: ["/images/products/coastal-leash-b.webp", "/images/products/coastal-leash-c.webp"],
     to: "/shop?category=Matching%20Leashes",
   },
 ];

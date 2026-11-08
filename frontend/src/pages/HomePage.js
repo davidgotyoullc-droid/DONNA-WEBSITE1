@@ -6,6 +6,7 @@ import PressMarquee from "@/components/PressMarquee";
 import CategoryTiles from "@/components/CategoryTiles";
 import ProductCarousel from "@/components/ProductCarousel";
 import EditorialMarquee from "@/components/EditorialMarquee";
+import VideosSection from "@/components/VideosSection";
 import BrandStory from "@/components/BrandStory";
 import WhyChokeFree from "@/components/WhyChokeFree";
 import Testimonials from "@/components/Testimonials";
@@ -38,6 +39,7 @@ export default function HomePage() {
       <ProductCarousel id="best-sellers" eyebrow="MOST LOVED" title="Best sellers" products={bestSellers} />
       <EditorialMarquee />
       <ProductCarousel id="new-arrivals" eyebrow="JUST STITCHED" title="New arrivals" products={newArrivals} />
+      <VideosSection />
       <BrandStory />
       <WhyChokeFree />
       <Testimonials />

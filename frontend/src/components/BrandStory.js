@@ -19,8 +19,8 @@ export default function BrandStory() {
         <div className="relative">
           <motion.div style={{ y }} className="overflow-hidden rounded-[2rem] border-8 border-white shadow-2xl shadow-[#3E2A33]/15">
             <img
-              src="/images/story/designer.png"
-              alt="Donna Devlin in her studio"
+              src="/images/story/donna-founder.jpg"
+              alt="Donna Devlin, founder and designer"
               loading="lazy"
               className="aspect-[4/5] w-full object-cover"
               data-testid="story-portrait"
@@ -33,7 +33,7 @@ export default function BrandStory() {
             transition={{ duration: 0.7, delay: 0.2 }}
             className="absolute -bottom-8 -right-2 w-40 overflow-hidden rounded-3xl border-8 border-white shadow-xl sm:w-52 lg:-right-8"
           >
-            <img src="/images/story/craft.png" alt="Hand-stitching a cotton harness" loading="lazy" className="aspect-square w-full object-cover" />
+            <img src="/images/story/fabric-swatch.jpg" alt="Fabric and stitching detail" loading="lazy" className="aspect-square w-full object-cover" />
           </motion.div>
         </div>
 

@@ -1,12 +1,12 @@
 import { motion } from "framer-motion";
 
 const STRIP = [
-  "/images/products/garden-party-vest-b.png",
-  "/images/hero/hero-2.png",
-  "/images/products/cherry-picnic-vest-b.png",
-  "/images/products/daisy-collar-b.png",
-  "/images/products/coastal-leash-b.png",
-  "/images/products/polka-wisp-harness-b.png",
+  "/images/products/garden-party-vest-b.webp",
+  "/images/hero/hero-2.webp",
+  "/images/products/cherry-picnic-vest-b.webp",
+  "/images/products/daisy-collar-b.webp",
+  "/images/products/coastal-leash-b.webp",
+  "/images/products/polka-wisp-harness-b.webp",
 ];
 
 export default function CommunityStrip() {

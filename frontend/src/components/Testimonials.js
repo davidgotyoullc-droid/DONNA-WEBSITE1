@@ -10,7 +10,7 @@ const REVIEWS = [
     product: "The Garden Party Walking Vest",
     quote:
       "Our vet suggested a choke-free harness and this vest changed our walks completely. Bella used to cough after every outing — that stopped the very first day. The floral cotton is even prettier in person.",
-    photos: ["/images/reviews/r1.png"],
+    photos: ["/images/reviews/r1.webp"],
     color: "#7B1FA2",
   },
   {
@@ -20,7 +20,7 @@ const REVIEWS = [
     product: "The Scotland Yard Step-In Harness",
     quote:
       "The plaid is so sharp we get stopped at the dog park every single time. Stepping into it takes seconds, and the stitching has held up to daily walks and a very enthusiastic puller.",
-    photos: ["/images/reviews/r2.png"],
+    photos: ["/images/reviews/r2.webp"],
     color: "#1565C0",
   },
   {
@@ -30,7 +30,7 @@ const REVIEWS = [
     product: "The Polka Wisp Step-In Harness",
     quote:
       "On in one motion, off just as fast, and my little pup actually leans in to have it put on. Worth every penny — you can feel the handcrafting the moment you pick it up.",
-    photos: ["/images/reviews/r3.png"],
+    photos: ["/images/reviews/r3.webp"],
     color: "#2E7D32",
   },
   {
@@ -40,7 +40,7 @@ const REVIEWS = [
     product: "The Cherry Picnic Walking Vest",
     quote:
       "Mochi is long and broad-chested, so fit is always a gamble — the size guide was spot on. The cherry gingham gets compliments from complete strangers at the farmers market.",
-    photos: ["/images/reviews/r4.png"],
+    photos: ["/images/reviews/r4.webp"],
     color: "#C62828",
   },
   {
@@ -50,7 +50,7 @@ const REVIEWS = [
     product: "The Daisy Chain Designer Collar",
     quote:
       "The little bow is removable, the brass hardware feels substantial, and the cotton hasn't faded after months of wear. Winston basically models for the neighborhood now.",
-    photos: ["/images/reviews/r5.png"],
+    photos: ["/images/reviews/r5.webp"],
     color: "#E65100",
   },
   {
@@ -60,7 +60,7 @@ const REVIEWS = [
     product: "The Coastal Stripe Leash",
     quote:
       "Light in the hand, soft on the grip, and the sage stripe matches Fig's whole set. The clasp swivels so smoothly — no more tangled leash mid-walk.",
-    photos: ["/images/reviews/r6.png"],
+    photos: ["/images/reviews/r6.webp"],
     color: "#00838F",
   },
 ];

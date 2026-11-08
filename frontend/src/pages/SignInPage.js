@@ -81,6 +81,13 @@ export default function SignInPage() {
             placeholder={mode === "register" ? "Password (6+ characters)" : "Password"}
             className={inputCls}
           />
+          {mode === "signin" && (
+            <p className="text-right">
+              <Link to="/forgot-password" data-testid="forgot-password-link" className="text-xs font-semibold text-[#E6007E] underline underline-offset-2">
+                Forgot password?
+              </Link>
+            </p>
+          )}
           {error && (
             <p data-testid="signin-error" className="rounded-2xl bg-red-50 px-4 py-3 text-sm text-red-700">
               {error}

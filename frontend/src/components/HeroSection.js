@@ -4,12 +4,12 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, Ruler } from "lucide-react";
 
 const FRAMES = [
-  "/images/hero/hero-1.png",
-  "/images/hero/pose-2.png",
-  "/images/hero/pose-3.png",
-  "/images/hero/pose-4.png",
-  "/images/hero/pose-5.png",
-  "/images/hero/pose-6.png",
+  "/images/hero/hero-1.webp",
+  "/images/hero/pose-2.webp",
+  "/images/hero/pose-3.webp",
+  "/images/hero/pose-4.webp",
+  "/images/hero/pose-5.webp",
+  "/images/hero/pose-6.webp",
 ];
 
 const LINES = [
@@ -148,7 +148,7 @@ export default function HeroSection() {
             className="absolute -bottom-8 -left-4 hidden w-44 overflow-hidden rounded-3xl border-8 border-white shadow-xl shadow-[#3E2A33]/25 sm:block lg:-left-12 lg:w-56"
             data-testid="hero-detail-frame"
           >
-            <img src="/images/hero/hero-3.png" alt="Hand-stitched cotton detail" className="aspect-square w-full object-cover" />
+            <img src="/images/hero/hero-3.webp" alt="Hand-stitched cotton detail" className="aspect-square w-full object-cover" />
           </motion.div>
 
           <motion.div

@@ -20,6 +20,10 @@ import WholesalePage from "@/pages/WholesalePage";
 import SignupPage from "@/pages/SignupPage";
 import SignInPage from "@/pages/SignInPage";
 import AccountPage from "@/pages/AccountPage";
+import AboutPage from "@/pages/AboutPage";
+import ContactPage from "@/pages/ContactPage";
+import ForgotPasswordPage from "@/pages/ForgotPasswordPage";
+import ResetPasswordPage from "@/pages/ResetPasswordPage";
 import PaymentSuccess from "@/pages/PaymentSuccess";
 import PaymentCancel from "@/pages/PaymentCancel";
 
@@ -68,6 +72,10 @@ function App() {
               <Route path="/signup" element={<SignupPage />} />
               <Route path="/signin" element={<SignInPage />} />
               <Route path="/account" element={<AccountPage />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/contact" element={<ContactPage />} />
+              <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+              <Route path="/reset-password" element={<ResetPasswordPage />} />
               <Route path="/payment/success" element={<PaymentSuccess />} />
               <Route path="/payment/cancel" element={<PaymentCancel />} />
             </Routes>
