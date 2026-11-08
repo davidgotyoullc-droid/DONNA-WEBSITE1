@@ -12,6 +12,10 @@ import QuickViewModal from "@/components/QuickViewModal";
 import HomePage from "@/pages/HomePage";
 import ShopPage from "@/pages/ShopPage";
 import ProductPage from "@/pages/ProductPage";
+import FittingRoomPage from "@/pages/FittingRoomPage";
+import StoreLocatorPage from "@/pages/StoreLocatorPage";
+import WholesalePage from "@/pages/WholesalePage";
+import SignupPage from "@/pages/SignupPage";
 import PaymentSuccess from "@/pages/PaymentSuccess";
 import PaymentCancel from "@/pages/PaymentCancel";
 
@@ -52,6 +56,10 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/shop" element={<ShopPage />} />
             <Route path="/product/:slug" element={<ProductPage />} />
+            <Route path="/fitting-room" element={<FittingRoomPage />} />
+            <Route path="/store-locator" element={<StoreLocatorPage />} />
+            <Route path="/wholesale" element={<WholesalePage />} />
+            <Route path="/signup" element={<SignupPage />} />
             <Route path="/payment/success" element={<PaymentSuccess />} />
             <Route path="/payment/cancel" element={<PaymentCancel />} />
           </Routes>

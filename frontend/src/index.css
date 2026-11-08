@@ -130,3 +130,32 @@
 .animate-kenburns {
     animation: kenburns 9s ease-in-out infinite;
 }
+
+/* Glitch flipbook hover */
+@keyframes glitch-jitter-kf {
+    0% { transform: translate(0, 0); }
+    20% { transform: translate(-2px, 1px); }
+    40% { transform: translate(2px, -1px); }
+    60% { transform: translate(-1px, 2px); }
+    80% { transform: translate(1px, -2px); }
+    100% { transform: translate(0, 0); }
+}
+.glitch-jitter {
+    animation: glitch-jitter-kf 0.3s steps(2, end) infinite;
+}
+.glitch-scan {
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(28, 42, 57, 0.06) 0px,
+        rgba(28, 42, 57, 0.06) 1px,
+        transparent 1px,
+        transparent 4px
+    );
+    mix-blend-mode: multiply;
+    animation: glitch-scan-kf 0.45s steps(3, end) infinite;
+}
+@keyframes glitch-scan-kf {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(3px); }
+    100% { transform: translateY(-2px); }
+}

@@ -162,6 +162,8 @@ class Enquiry(BaseModel):
     email: EmailStr
     topic: str = Field(default="General", max_length=60)
     message: str = Field(min_length=1, max_length=3000)
+    company: Optional[str] = Field(default=None, max_length=160)
+    phone: Optional[str] = Field(default=None, max_length=40)
 
 @api_router.post("/enquiries")
 async def create_enquiry(enquiry: Enquiry):

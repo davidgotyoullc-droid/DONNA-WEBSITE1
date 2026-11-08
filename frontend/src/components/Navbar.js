@@ -7,6 +7,7 @@ import { useCart } from "@/context/CartContext";
 
 const LINKS = [
   { label: "Shop", to: "/shop" },
+  { label: "Fitting Room", to: "/fitting-room" },
   { label: "Our Story", to: "/#story" },
   { label: "Why Choke-Free", to: "/#choke-free" },
   { label: "Contact", to: "/#contact" },

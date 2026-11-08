@@ -65,9 +65,24 @@ export default function Footer() {
               </button>
             </li>
             <li>
-              <button data-testid="footer-choke-free-link" onClick={() => go("choke-free")} className="text-[#1C2A39] transition-colors hover:text-[#D96B43]">
-                Why choke-free
-              </button>
+              <Link to="/fitting-room" data-testid="footer-fitting-room-link" className="text-[#1C2A39] transition-colors hover:text-[#D96B43]">
+                Fitting room
+              </Link>
+            </li>
+            <li>
+              <Link to="/store-locator" data-testid="footer-store-locator-link" className="text-[#1C2A39] transition-colors hover:text-[#D96B43]">
+                Store locator
+              </Link>
+            </li>
+            <li>
+              <Link to="/wholesale" data-testid="footer-wholesale-link" className="text-[#1C2A39] transition-colors hover:text-[#D96B43]">
+                Wholesale
+              </Link>
+            </li>
+            <li>
+              <Link to="/signup" data-testid="footer-signup-link" className="text-[#1C2A39] transition-colors hover:text-[#D96B43]">
+                Join the pack
+              </Link>
             </li>
             <li>
               <button data-testid="footer-contact-link" onClick={() => go("contact")} className="text-[#1C2A39] transition-colors hover:text-[#D96B43]">

@@ -1,9 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, Ruler } from "lucide-react";
 
-const SLIDES = ["/images/hero/hero-1.png", "/images/hero/hero-2.png", "/images/hero/hero-3.png"];
+const FRAMES = [
+  "/images/hero/hero-1.png",
+  "/images/hero/pose-2.png",
+  "/images/hero/pose-3.png",
+  "/images/hero/pose-4.png",
+  "/images/hero/pose-5.png",
+  "/images/hero/pose-6.png",
+];
 
 const LINES = [
   { text: "Gentle by design.", accent: false },
@@ -27,14 +34,14 @@ function MaskedLine({ children, delay }) {
 }
 
 export default function HeroSection() {
-  const [slide, setSlide] = useState(0);
+  const [frame, setFrame] = useState(0);
   const sectionRef = useRef(null);
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end start"] });
   const yMain = useTransform(scrollYProgress, [0, 1], [0, 90]);
   const ySmall = useTransform(scrollYProgress, [0, 1], [0, -60]);
 
   useEffect(() => {
-    const id = setInterval(() => setSlide((s) => (s + 1) % SLIDES.length), 2400);
+    const id = setInterval(() => setFrame((f) => (f + 1) % FRAMES.length), 140);
     return () => clearInterval(id);
   }, []);
 
@@ -85,14 +92,14 @@ export default function HeroSection() {
               Shop the collection
               <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
-            <a
-              href="#choke-free"
+            <Link
+              to="/fitting-room"
               data-testid="hero-fit-button"
               className="inline-flex items-center gap-2 rounded-full border border-[#1C2A39]/20 px-7 py-3.5 text-sm font-semibold text-[#1C2A39] transition-colors hover:border-[#D96B43] hover:text-[#D96B43]"
             >
               <Ruler className="h-4 w-4" />
               Find your perfect fit
-            </a>
+            </Link>
           </motion.div>
 
           <motion.div
@@ -116,29 +123,22 @@ export default function HeroSection() {
             className="relative aspect-[4/5] w-full overflow-hidden rounded-[2rem] border-8 border-white shadow-2xl shadow-[#1C2A39]/20"
             data-testid="hero-main-frame"
           >
-            <AnimatePresence mode="popLayout">
-              <motion.img
-                key={slide}
-                src={SLIDES[slide]}
-                alt="Dog wearing a handcrafted Donna Devlin harness"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.45 }}
-                className="animate-kenburns absolute inset-0 h-full w-full object-cover"
+            {FRAMES.map((src, i) => (
+              <img
+                key={src}
+                src={src}
+                alt={i === 0 ? "Dog wearing a handcrafted Donna Devlin floral walking vest" : ""}
+                className={`absolute inset-0 h-full w-full object-cover ${i === frame ? "opacity-100" : "opacity-0"}`}
+                style={{ transform: i === frame ? "scale(1.02)" : "scale(1.02)" }}
               />
-            </AnimatePresence>
-            <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-1.5">
-              {SLIDES.map((_, i) => (
-                <button
-                  key={i}
-                  data-testid={`hero-slide-dot-${i}`}
-                  onClick={() => setSlide(i)}
-                  className={`h-1.5 rounded-full transition-[width,background-color] duration-300 ${i === slide ? "w-6 bg-[#D96B43]" : "w-1.5 bg-white/70"}`}
-                  aria-label={`Slide ${i + 1}`}
-                />
-              ))}
-            </div>
+            ))}
+            <span
+              data-testid="hero-live-tag"
+              className="font-mono-accent absolute left-4 top-4 flex items-center gap-1.5 rounded-full bg-[#1C2A39]/85 px-3 py-1.5 text-[9px] font-bold tracking-[0.2em] text-[#FDFBF7] backdrop-blur"
+            >
+              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#D96B43]" />
+              IN MOTION
+            </span>
           </motion.div>
 
           <motion.div

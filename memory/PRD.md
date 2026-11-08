@@ -17,6 +17,13 @@ An original, award-tier e-commerce storefront for Donna Devlin Designs (handcraf
 - Boutique gift buyer drawn to whimsical prints and craft.
 - Wholesale stockist using the enquiry form.
 
+## Implemented (2026-11-07, v2)
+- Hero main image is now a true gif-style flipbook: 6 AI-generated pose frames of the same poodle stepped at 140ms with an "IN MOTION" tag; the small detail sub-frame stays static, parallax kept.
+- Category tiles ("Shop our signature pieces") come alive on hover: rapid 4-frame glitch flipbook (150ms/frame) with scanline + jitter effect, looping until the cursor leaves. 4 extra AI frames generated for collars/leashes.
+- Reviews redesigned as a Google-review-style interface: avatar-with-initial, name/pet/time, yellow stars, verified-purchase badge, photos of the purchased product, 4.9 summary card; auto-slides every 7s, pauses on hover, arrows + dots.
+- "As featured in" strip background changed to #FF00B8 with white wordmarks.
+- New pages (content carried over from donnadevlindesigns.com, restyled in the new vibe): /fitting-room (tabbed size guides + tips for collars, leashes, vests, harnesses), /store-locator (13 SW-Florida stockists with call/directions), /wholesale (terms + full application form posting to /api/enquiries with company/phone), /signup (Join the Pack newsletter page). Navbar + footer links updated.
+
 ## Implemented (2026-11-07)
 - Kinetic hero: masked line-by-line reveal, gif-like 3-frame slideshow with ken-burns drift, scroll parallax, choke-free badge.
 - Rotating announcement bar; glass sticky navbar; mobile menu; slow sage editorial marquee; press marquee.

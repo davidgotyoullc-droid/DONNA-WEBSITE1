@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
@@ -6,24 +7,108 @@ const CATEGORIES = [
   {
     name: "Walking Vests",
     blurb: "Soft, lightweight vests that move pressure from neck to chest.",
-    image: "/images/products/garden-party-vest-a.png",
+    frames: [
+      "/images/products/garden-party-vest-a.png",
+      "/images/products/garden-party-vest-b.png",
+      "/images/products/cherry-picnic-vest-a.png",
+      "/images/products/cherry-picnic-vest-b.png",
+    ],
   },
   {
     name: "Step-In Harnesses",
     blurb: "Choke-free and on in seconds with one-click closures.",
-    image: "/images/products/scotland-yard-harness-a.png",
+    frames: [
+      "/images/products/scotland-yard-harness-a.png",
+      "/images/products/scotland-yard-harness-b.png",
+      "/images/products/polka-wisp-harness-a.png",
+      "/images/products/polka-wisp-harness-b.png",
+    ],
   },
   {
     name: "Designer Collars",
     blurb: "Premium cotton, reinforced for strength, gentle on necks.",
-    image: "/images/products/daisy-collar-a.png",
+    frames: [
+      "/images/products/daisy-collar-a.png",
+      "/images/products/daisy-collar-b.png",
+      "/images/products/daisy-collar-c.png",
+      "/images/products/daisy-collar-d.png",
+    ],
   },
   {
     name: "Matching Leashes",
     blurb: "Coordinated leads that complete every set beautifully.",
-    image: "/images/products/coastal-leash-a.png",
+    frames: [
+      "/images/products/coastal-leash-a.png",
+      "/images/products/coastal-leash-b.png",
+      "/images/products/coastal-leash-c.png",
+      "/images/products/coastal-leash-d.png",
+    ],
   },
 ];
+
+function GlitchImage({ frames, alt, active }) {
+  const [frame, setFrame] = useState(0);
+
+  useEffect(() => {
+    if (!active) {
+      setFrame(0);
+      return;
+    }
+    const id = setInterval(() => setFrame((f) => (f + 1) % frames.length), 150);
+    return () => clearInterval(id);
+  }, [active, frames.length]);
+
+  return (
+    <div className={`relative h-full w-full ${active ? "glitch-jitter" : ""}`}>
+      {frames.map((src, i) => (
+        <img
+          key={src}
+          src={src}
+          alt={i === 0 ? alt : ""}
+          loading="lazy"
+          className={`absolute inset-0 h-full w-full object-cover ${i === frame ? "opacity-100" : "opacity-0"} ${
+            !active && i === 0 ? "transition-transform duration-700 ease-out group-hover:scale-105" : ""
+          }`}
+        />
+      ))}
+      {active && <div className="glitch-scan pointer-events-none absolute inset-0" />}
+    </div>
+  );
+}
+
+function CategoryTile({ cat, index }) {
+  const [active, setActive] = useState(false);
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.6, delay: index * 0.1 }}
+    >
+      <Link
+        to={`/shop?category=${encodeURIComponent(cat.name)}`}
+        data-testid={`category-tile-${cat.name.toLowerCase().replace(/\s+/g, "-")}`}
+        className="group block"
+        onMouseEnter={() => setActive(true)}
+        onMouseLeave={() => setActive(false)}
+      >
+        <div className="relative aspect-[3/4] overflow-hidden rounded-3xl bg-[#F4EFEA]" data-testid={`category-glitch-${cat.name.toLowerCase().replace(/\s+/g, "-")}`}>
+          <GlitchImage frames={cat.frames} alt={cat.name} active={active} />
+          <div className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-[#FDFBF7] text-[#1C2A39] opacity-0 shadow-md transition-opacity duration-300 group-hover:opacity-100">
+            <ArrowUpRight className="h-4 w-4" />
+          </div>
+        </div>
+        <h3 className="font-serif-display mt-5 text-xl font-semibold text-[#1C2A39] transition-colors group-hover:text-[#D96B43]">
+          {cat.name}
+        </h3>
+        <p className="mt-1.5 text-sm leading-relaxed text-[#5A6572]">{cat.blurb}</p>
+        <span className="mt-3 inline-block text-sm font-semibold text-[#D96B43]">
+          Shop {cat.name.toLowerCase()} →
+        </span>
+      </Link>
+    </motion.div>
+  );
+}
 
 export default function CategoryTiles() {
   return (
@@ -46,38 +131,7 @@ export default function CategoryTiles() {
 
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {CATEGORIES.map((cat, i) => (
-          <motion.div
-            key={cat.name}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.6, delay: i * 0.1 }}
-          >
-            <Link
-              to={`/shop?category=${encodeURIComponent(cat.name)}`}
-              data-testid={`category-tile-${cat.name.toLowerCase().replace(/\s+/g, "-")}`}
-              className="group block"
-            >
-              <div className="relative aspect-[3/4] overflow-hidden rounded-3xl bg-[#F4EFEA]">
-                <img
-                  src={cat.image}
-                  alt={cat.name}
-                  loading="lazy"
-                  className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                />
-                <div className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-[#FDFBF7] text-[#1C2A39] opacity-0 shadow-md transition-all duration-300 group-hover:opacity-100">
-                  <ArrowUpRight className="h-4 w-4" />
-                </div>
-              </div>
-              <h3 className="font-serif-display mt-5 text-xl font-semibold text-[#1C2A39] transition-colors group-hover:text-[#D96B43]">
-                {cat.name}
-              </h3>
-              <p className="mt-1.5 text-sm leading-relaxed text-[#5A6572]">{cat.blurb}</p>
-              <span className="mt-3 inline-block text-sm font-semibold text-[#D96B43]">
-                Shop {cat.name.toLowerCase()} →
-              </span>
-            </Link>
-          </motion.div>
+          <CategoryTile key={cat.name} cat={cat} index={i} />
         ))}
       </div>
     </section>
