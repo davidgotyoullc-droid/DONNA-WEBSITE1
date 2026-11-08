@@ -107,6 +107,21 @@ export default function AccountPage() {
         </div>
 
         {/* My pups — saved sizes */}
+        {user.role === "admin" && (
+          <div className="mt-8 rounded-3xl border border-[#E6007E]/20 bg-[#E6007E]/5 p-6" data-testid="admin-studio-card">
+            <p className="font-mono-accent text-[10px] tracking-[0.25em] text-[#E6007E]">STUDIO TOOLS</p>
+            <p className="mt-1 text-sm text-[#3E2A33]">Manage the promotional pop-up campaign your visitors see.</p>
+            <Link
+              to="/admin"
+              data-testid="admin-studio-link"
+              className="mt-4 inline-block rounded-full bg-[#3E2A33] px-6 py-3 text-sm font-semibold text-[#FDF7FA] transition-colors hover:bg-[#E6007E]"
+            >
+              Open Admin Studio
+            </Link>
+          </div>
+        )}
+
+        {/* My pups — saved sizes */}
         <div className="mt-14 mb-6 flex flex-wrap items-center justify-between gap-4">
           <h2 className="font-serif-display flex items-center gap-3 text-2xl font-semibold text-[#3E2A33]">
             <PawPrint className="h-5 w-5 text-[#E6007E]" /> My pups' sizes

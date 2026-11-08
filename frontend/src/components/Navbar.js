@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, ShoppingBag, User, X } from "lucide-react";
 import Logo from "@/components/Logo";
@@ -7,6 +7,7 @@ import { useCart } from "@/context/CartContext";
 import { useAuth } from "@/context/AuthContext";
 
 const LINKS = [
+  { label: "Home", to: "/" },
   { label: "Our Products", to: "/products" },
   { label: "Shop", to: "/shop" },
   { label: "Fitting Room", to: "/fitting-room" },
@@ -26,6 +27,7 @@ export default function Navbar() {
   const { user } = useAuth();
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   const go = (to) => {
     setOpen(false);
@@ -33,10 +35,21 @@ export default function Navbar() {
       const [path, hash] = to.split("#");
       navigate(path || "/");
       setTimeout(() => document.getElementById(hash)?.scrollIntoView({ behavior: "smooth" }), 120);
+      return;
+    }
+    if (to === pathname) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
       navigate(to);
     }
   };
+
+  const isActive = (to) => (to === "/" ? pathname === "/" : pathname.startsWith(to));
+
+  const linkCls = (to) =>
+    `group relative whitespace-nowrap text-sm font-medium transition-colors ${
+      isActive(to) ? "text-[#E6007E]" : "text-[#3E2A33] hover:text-[#E6007E]"
+    }`;
 
   return (
     <header
@@ -54,10 +67,15 @@ export default function Navbar() {
               key={link.label}
               data-testid={`nav-link-${link.label.toLowerCase().replace(/\s+/g, "-")}`}
               onClick={() => go(link.to)}
-              className="group relative whitespace-nowrap text-sm font-medium text-[#3E2A33] transition-colors hover:text-[#E6007E]"
+              aria-current={isActive(link.to) ? "page" : undefined}
+              className={linkCls(link.to)}
             >
               {link.label}
-              <span className="absolute -bottom-1 left-0 h-px w-0 bg-[#E6007E] transition-[width] duration-300 group-hover:w-full" />
+              <span
+                className={`absolute -bottom-1 left-0 h-px bg-[#E6007E] transition-[width] duration-300 ${
+                  isActive(link.to) ? "w-full" : "w-0 group-hover:w-full"
+                }`}
+              />
             </button>
           ))}
         </nav>
@@ -85,7 +103,7 @@ export default function Navbar() {
             {count > 0 && (
               <span
                 data-testid="cart-count-badge"
-                className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-[#E6007E] text-[10px] font-bold text-[#FDF7FA]"
+                className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-[#E6007E] text-[10px] font-bold text-white"
               >
                 {count}
               </span>
@@ -118,7 +136,10 @@ export default function Navbar() {
                   key={link.label}
                   data-testid={`mobile-nav-link-${link.label.toLowerCase().replace(/\s+/g, "-")}`}
                   onClick={() => go(link.to)}
-                  className="border-b border-[#3E2A33]/5 py-3 text-left font-serif-display text-lg text-[#3E2A33]"
+                  aria-current={!link.to.includes("#") && isActive(link.to) ? "page" : undefined}
+                  className={`border-b border-[#3E2A33]/5 py-3 text-left font-serif-display text-lg ${
+                    !link.to.includes("#") && isActive(link.to) ? "text-[#E6007E]" : "text-[#3E2A33]"
+                  }`}
                 >
                   {link.label}
                 </button>

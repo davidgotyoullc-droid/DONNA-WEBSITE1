@@ -17,6 +17,11 @@ An original, award-tier e-commerce storefront for Donna Devlin Designs (handcraf
 - Boutique gift buyer drawn to whimsical prints and craft.
 - Wholesale stockist using the enquiry form.
 
+## Implemented (2026-11-08, v5)
+- Footer rebranded to full-width brand brown (#3E2A33) with pink top edge, cream text/links, preserved content + newsletter.
+- Nav: "Home" added as first item (scrolls to top when already on /); active-page indication (pink + underline) on desktop and mobile menus.
+- Reusable promotional pop-up system: admin-only Admin Studio at /admin (role-gated; admin seeded from env, seed-if-missing only) with enable/disable toggle, headline, description, image picker + custom URL, CTA text/destination, optional coupon code, start/end scheduling, live preview. Popup shows on homepage only, 5s after load, once per session (sessionStorage), ESC/backdrop/X dismissal, never when disabled/expired. Demo campaign seeded DISABLED per request.
+
 ## Implemented (2026-11-08, v4)
 - Password reset by email (managed Resend): "Forgot password?" on sign-in → /forgot-password → branded one-time reset link email (1h expiry) → /reset-password. Tokens single-use, TTL-indexed.
 - Saved sizes ("My pups") in /account: save up to 6 dogs (name, breed, neck, girth) with automatic suggested vest/harness size. GET/PUT /api/account/dogs (auth-protected).

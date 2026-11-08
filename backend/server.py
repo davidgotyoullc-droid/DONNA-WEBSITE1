@@ -210,6 +210,18 @@ PRODUCTS = [
     },
 ]
 
+DEMO_PROMO = {
+    "enabled": False,
+    "headline": "A Little Something Special for Your Pup!",
+    "description": "Discover our latest designs and exclusive offers, thoughtfully created for comfort, style, and happier walks.",
+    "image_url": "/images/products/garden-party-vest-b.webp",
+    "cta_text": "Explore Our Collection",
+    "cta_link": "/shop",
+    "coupon_code": "",
+    "start_at": None,
+    "end_at": None,
+}
+
 INDEXES = {
     "products": [IndexModel([("slug", ASCENDING)], name="slug", unique=True)],
     "enquiries": [IndexModel([("created_at", ASCENDING)], name="created_at")],
@@ -232,6 +244,29 @@ async def seed_products() -> None:
     if await db.products.count_documents({}) == 0:
         await db.products.insert_many(PRODUCTS)
         logging.getLogger(__name__).info("Seeded %d products", len(PRODUCTS))
+
+async def seed_admin() -> None:
+    email = os.environ.get("ADMIN_EMAIL")
+    password = os.environ.get("ADMIN_PASSWORD")
+    if not email or not password:
+        return
+    email = email.lower()
+    if await db.users.find_one({"email": email}) is None:
+        await db.users.insert_one({
+            "name": "Donna (Admin)",
+            "email": email,
+            "password_hash": hash_password(password),
+            "role": "admin",
+            "dogs": [],
+            "created_at": datetime.now(timezone.utc).isoformat(),
+        })
+        logging.getLogger(__name__).info("Seeded admin %s", email)
+
+async def seed_promotion() -> None:
+    if await db.promotions.count_documents({}) == 0:
+        doc = {**DEMO_PROMO, "updated_at": datetime.now(timezone.utc).isoformat()}
+        await db.promotions.insert_one(doc)
+        logging.getLogger(__name__).info("Seeded demo promotion (disabled)")
 
 app = FastAPI()
 api_router = APIRouter(prefix="/api")
@@ -324,7 +359,13 @@ async def get_current_user(request: Request) -> dict:
     user = await db.users.find_one({"_id": ObjectId(payload["sub"])})
     if not user:
         raise HTTPException(401, "User not found")
-    return {"id": str(user["_id"]), "email": user["email"], "name": user.get("name", ""), "created_at": user.get("created_at")}
+    return {"id": str(user["_id"]), "email": user["email"], "name": user.get("name", ""), "role": user.get("role", "customer"), "created_at": user.get("created_at")}
+
+async def require_admin(request: Request) -> dict:
+    user = await get_current_user(request)
+    if user["role"] != "admin":
+        raise HTTPException(403, "Administrator access required")
+    return user
 
 async def get_optional_user(request: Request):
     try:
@@ -333,7 +374,7 @@ async def get_optional_user(request: Request):
         return None
 
 def public_user(user: dict) -> dict:
-    return {"id": str(user["_id"]), "email": user["email"], "name": user.get("name", "")}
+    return {"id": str(user["_id"]), "email": user["email"], "name": user.get("name", ""), "role": user.get("role", "customer")}
 
 class RegisterRequest(BaseModel):
     name: str = Field(min_length=1, max_length=120)
@@ -482,6 +523,84 @@ async def my_orders(request: Request):
     user = await get_current_user(request)
     return await db.payment_transactions.find({"user_id": user["id"]}, {"_id": 0}).sort("created_at", -1).to_list(50)
 
+# ---------- Promotions ----------
+
+def _parse_dt(value: Optional[str]) -> Optional[datetime]:
+    if not value:
+        return None
+    try:
+        dt = datetime.fromisoformat(value)
+    except ValueError:
+        raise HTTPException(400, "Dates must be ISO format")
+    return dt if dt.tzinfo else dt.replace(tzinfo=timezone.utc)
+
+def promo_public(doc: dict) -> dict:
+    return {
+        "enabled": doc.get("enabled", False),
+        "headline": doc.get("headline", ""),
+        "description": doc.get("description", ""),
+        "image_url": doc.get("image_url", ""),
+        "cta_text": doc.get("cta_text", ""),
+        "cta_link": doc.get("cta_link", "/shop"),
+        "coupon_code": doc.get("coupon_code", ""),
+        "start_at": doc.get("start_at"),
+        "end_at": doc.get("end_at"),
+        "updated_at": doc.get("updated_at"),
+    }
+
+def promo_is_live(doc: dict) -> bool:
+    if not doc or not doc.get("enabled"):
+        return False
+    now = datetime.now(timezone.utc)
+    start = _parse_dt(doc.get("start_at"))
+    end = _parse_dt(doc.get("end_at"))
+    if start and start > now:
+        return False
+    if end and end < now:
+        return False
+    return True
+
+@api_router.get("/promotions/active")
+async def active_promotion():
+    doc = await db.promotions.find_one({}, {"_id": 0})
+    if promo_is_live(doc or {}):
+        return promo_public(doc)
+    return {"enabled": False}
+
+@api_router.get("/admin/promotion")
+async def get_promotion(request: Request):
+    await require_admin(request)
+    doc = await db.promotions.find_one({}, {"_id": 0})
+    if not doc:
+        return {**DEMO_PROMO}
+    return promo_public(doc)
+
+class PromoIn(BaseModel):
+    enabled: bool = False
+    headline: str = Field(min_length=1, max_length=120)
+    description: str = Field(default="", max_length=400)
+    image_url: str = Field(default="", max_length=300)
+    cta_text: str = Field(default="Shop now", min_length=1, max_length=40)
+    cta_link: str = Field(default="/shop", min_length=1, max_length=300)
+    coupon_code: str = Field(default="", max_length=40)
+    start_at: Optional[str] = None
+    end_at: Optional[str] = None
+
+@api_router.put("/admin/promotion")
+async def put_promotion(promo: PromoIn, request: Request):
+    await require_admin(request)
+    if not (promo.cta_link.startswith("/") or promo.cta_link.startswith("https://")):
+        raise HTTPException(400, "Button destination must be a site path like /shop or an https:// link")
+    start = _parse_dt(promo.start_at)
+    end = _parse_dt(promo.end_at)
+    if start and end and start >= end:
+        raise HTTPException(400, "The campaign end must be after the start")
+    doc = promo.model_dump()
+    doc["coupon_code"] = doc["coupon_code"].strip().upper()
+    doc["updated_at"] = datetime.now(timezone.utc).isoformat()
+    await db.promotions.update_one({}, {"$set": doc}, upsert=True)
+    return {"ok": True, "promotion": doc}
+
 # ---------- Stripe checkout ----------
 
 class CheckoutItem(BaseModel):
@@ -608,6 +727,8 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(level
 async def startup():
     app.state.index_task = asyncio.create_task(ensure_indexes())
     await seed_products()
+    await seed_admin()
+    await seed_promotion()
 
 @app.on_event("shutdown")
 async def shutdown_db_client():

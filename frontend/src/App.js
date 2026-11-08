@@ -10,6 +10,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CartDrawer from "@/components/CartDrawer";
 import QuickViewModal from "@/components/QuickViewModal";
+import PromoPopup from "@/components/PromoPopup";
 import HomePage from "@/pages/HomePage";
 import ShopPage from "@/pages/ShopPage";
 import ProductPage from "@/pages/ProductPage";
@@ -24,6 +25,7 @@ import AboutPage from "@/pages/AboutPage";
 import ContactPage from "@/pages/ContactPage";
 import ForgotPasswordPage from "@/pages/ForgotPasswordPage";
 import ResetPasswordPage from "@/pages/ResetPasswordPage";
+import AdminPage from "@/pages/AdminPage";
 import PaymentSuccess from "@/pages/PaymentSuccess";
 import PaymentCancel from "@/pages/PaymentCancel";
 
@@ -78,10 +80,12 @@ function App() {
               <Route path="/reset-password" element={<ResetPasswordPage />} />
               <Route path="/payment/success" element={<PaymentSuccess />} />
               <Route path="/payment/cancel" element={<PaymentCancel />} />
+              <Route path="/admin" element={<AdminPage />} />
             </Routes>
             <Footer />
             <CartDrawer />
             <QuickViewModal />
+            <PromoPopup />
             <Toaster position="bottom-right" toastOptions={{ style: { background: "#3E2A33", color: "#FDF7FA", border: "none" } }} />
           </CartProvider>
         </AuthProvider>
