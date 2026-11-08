@@ -10,7 +10,7 @@ const REVIEWS = [
     product: "The Garden Party Walking Vest",
     quote:
       "Our vet suggested a choke-free harness and this vest changed our walks completely. Bella used to cough after every outing — that stopped the very first day. The floral cotton is even prettier in person.",
-    photos: ["/images/products/garden-party-vest-b.png", "/images/products/garden-party-vest-a.png"],
+    photos: ["/images/reviews/r1.png"],
     color: "#7B1FA2",
   },
   {
@@ -20,7 +20,7 @@ const REVIEWS = [
     product: "The Scotland Yard Step-In Harness",
     quote:
       "The plaid is so sharp we get stopped at the dog park every single time. Stepping into it takes seconds, and the stitching has held up to daily walks and a very enthusiastic puller.",
-    photos: ["/images/products/scotland-yard-harness-b.png", "/images/products/scotland-yard-harness-a.png"],
+    photos: ["/images/reviews/r2.png"],
     color: "#1565C0",
   },
   {
@@ -30,7 +30,7 @@ const REVIEWS = [
     product: "The Polka Wisp Step-In Harness",
     quote:
       "On in one motion, off just as fast, and my little pup actually leans in to have it put on. Worth every penny — you can feel the handcrafting the moment you pick it up.",
-    photos: ["/images/products/polka-wisp-harness-b.png", "/images/products/polka-wisp-harness-a.png"],
+    photos: ["/images/reviews/r3.png"],
     color: "#2E7D32",
   },
   {
@@ -40,7 +40,7 @@ const REVIEWS = [
     product: "The Cherry Picnic Walking Vest",
     quote:
       "Mochi is long and broad-chested, so fit is always a gamble — the size guide was spot on. The cherry gingham gets compliments from complete strangers at the farmers market.",
-    photos: ["/images/products/cherry-picnic-vest-b.png", "/images/products/cherry-picnic-vest-a.png"],
+    photos: ["/images/reviews/r4.png"],
     color: "#C62828",
   },
   {
@@ -50,7 +50,7 @@ const REVIEWS = [
     product: "The Daisy Chain Designer Collar",
     quote:
       "The little bow is removable, the brass hardware feels substantial, and the cotton hasn't faded after months of wear. Winston basically models for the neighborhood now.",
-    photos: ["/images/products/daisy-collar-b.png", "/images/products/daisy-collar-a.png"],
+    photos: ["/images/reviews/r5.png"],
     color: "#E65100",
   },
   {
@@ -60,7 +60,7 @@ const REVIEWS = [
     product: "The Coastal Stripe Leash",
     quote:
       "Light in the hand, soft on the grip, and the sage stripe matches Fig's whole set. The clasp swivels so smoothly — no more tangled leash mid-walk.",
-    photos: ["/images/products/coastal-leash-b.png", "/images/products/coastal-leash-a.png"],
+    photos: ["/images/reviews/r6.png"],
     color: "#00838F",
   },
 ];
@@ -79,7 +79,7 @@ export default function Testimonials() {
   const go = (dir) => setIndex((i) => (i + dir + REVIEWS.length) % REVIEWS.length);
 
   return (
-    <section data-testid="testimonials" className="bg-[#F4EFEA] py-20 lg:py-24">
+    <section data-testid="testimonials" className="bg-[#FBEEF4] py-20 lg:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <div className="mb-12 flex flex-col items-start justify-between gap-8 lg:flex-row lg:items-end">
           <motion.div
@@ -88,8 +88,8 @@ export default function Testimonials() {
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.7 }}
           >
-            <p className="font-mono-accent mb-3 text-xs tracking-[0.3em] text-[#D96B43]">WALKED &amp; LOVED</p>
-            <h2 className="font-serif-display text-3xl font-semibold tracking-tight text-[#1C2A39] sm:text-4xl">
+            <p className="font-mono-accent mb-3 text-xs tracking-[0.3em] text-[#E6007E]">WALKED &amp; LOVED</p>
+            <h2 className="font-serif-display text-3xl font-semibold tracking-tight text-[#3E2A33] sm:text-4xl">
               Loved by dogs &amp; their humans
             </h2>
           </motion.div>
@@ -99,10 +99,10 @@ export default function Testimonials() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.7, delay: 0.1 }}
-            className="flex items-center gap-4 rounded-2xl border border-[#1C2A39]/10 bg-white px-6 py-4 shadow-sm"
+            className="flex items-center gap-4 rounded-2xl border border-[#3E2A33]/10 bg-white px-6 py-4 shadow-sm"
             data-testid="reviews-summary"
           >
-            <span className="font-serif-display text-4xl font-bold text-[#1C2A39]">4.9</span>
+            <span className="font-serif-display text-4xl font-bold text-[#3E2A33]">4.9</span>
             <div>
               <div className="flex gap-0.5 text-[#FBBC04]">
                 {Array.from({ length: 5 }).map((_, i) => (
@@ -128,7 +128,7 @@ export default function Testimonials() {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -40 }}
                 transition={{ duration: 0.45, ease: "easeOut" }}
-                className="rounded-3xl border border-[#1C2A39]/10 bg-white p-6 shadow-sm sm:p-8"
+                className="rounded-3xl border border-[#3E2A33]/10 bg-white p-6 shadow-sm sm:p-8"
                 data-testid={`review-card-${index}`}
               >
                 <div className="flex items-center gap-4">
@@ -140,7 +140,7 @@ export default function Testimonials() {
                     {review.name[0]}
                   </span>
                   <div className="min-w-0 flex-1">
-                    <p className="truncate text-sm font-semibold text-[#1C2A39]">{review.name}</p>
+                    <p className="truncate text-sm font-semibold text-[#3E2A33]">{review.name}</p>
                     <p className="text-xs text-[#5A6572]">
                       {review.pet} · {review.time}
                     </p>
@@ -154,26 +154,26 @@ export default function Testimonials() {
                     ))}
                   </div>
                   <span className="flex items-center gap-1 text-xs font-medium text-[#5A6572]">
-                    <BadgeCheck className="h-3.5 w-3.5 text-[#8A9A86]" />
+                    <BadgeCheck className="h-3.5 w-3.5 text-[#7D8F4E]" />
                     Verified purchase
                   </span>
                 </div>
 
                 <p className="mt-4 text-base leading-relaxed text-[#3A4654]">{review.quote}</p>
 
-                <div className="mt-5 flex gap-3" data-testid={`review-photos-${index}`}>
+                <div className="mt-5 flex flex-wrap gap-3" data-testid={`review-photos-${index}`}>
                   {review.photos.map((src) => (
                     <img
                       key={src}
                       src={src}
                       alt={`${review.product} purchased by ${review.name}`}
                       loading="lazy"
-                      className="h-20 w-20 rounded-xl border border-[#1C2A39]/10 object-cover sm:h-24 sm:w-24"
+                      className="h-20 w-20 rounded-xl border border-[#3E2A33]/10 object-cover sm:h-24 sm:w-24"
                     />
                   ))}
                 </div>
 
-                <div className="mt-5 flex items-center justify-between border-t border-[#1C2A39]/5 pt-4">
+                <div className="mt-5 flex items-center justify-between border-t border-[#3E2A33]/5 pt-4">
                   <p className="font-mono-accent text-[10px] tracking-[0.15em] text-[#5A6572]">
                     PURCHASED: {review.product.toUpperCase()}
                   </p>
@@ -186,7 +186,7 @@ export default function Testimonials() {
             <button
               data-testid="reviews-prev"
               onClick={() => go(-1)}
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-[#1C2A39]/15 text-[#1C2A39] transition-colors hover:border-[#D96B43] hover:text-[#D96B43]"
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-[#3E2A33]/15 text-[#3E2A33] transition-colors hover:border-[#E6007E] hover:text-[#E6007E]"
               aria-label="Previous review"
             >
               <ArrowLeft className="h-4 w-4" />
@@ -197,7 +197,7 @@ export default function Testimonials() {
                   key={i}
                   data-testid={`review-dot-${i}`}
                   onClick={() => setIndex(i)}
-                  className={`h-2 rounded-full transition-[width,background-color] duration-300 ${i === index ? "w-7 bg-[#D96B43]" : "w-2 bg-[#1C2A39]/20"}`}
+                  className={`h-2 rounded-full transition-[width,background-color] duration-300 ${i === index ? "w-7 bg-[#E6007E]" : "w-2 bg-[#3E2A33]/20"}`}
                   aria-label={`Review ${i + 1}`}
                 />
               ))}
@@ -205,7 +205,7 @@ export default function Testimonials() {
             <button
               data-testid="reviews-next"
               onClick={() => go(1)}
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-[#1C2A39]/15 text-[#1C2A39] transition-colors hover:border-[#D96B43] hover:text-[#D96B43]"
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-[#3E2A33]/15 text-[#3E2A33] transition-colors hover:border-[#E6007E] hover:text-[#E6007E]"
               aria-label="Next review"
             >
               <ArrowRight className="h-4 w-4" />

@@ -103,8 +103,8 @@ export default function FittingRoomPage() {
   return (
     <main data-testid="fitting-room-page" className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:py-20">
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="mb-10 max-w-2xl">
-        <p className="font-mono-accent mb-3 text-xs tracking-[0.3em] text-[#D96B43]">FITTING ROOM</p>
-        <h1 className="font-serif-display text-4xl font-semibold tracking-tight text-[#1C2A39] sm:text-5xl">
+        <p className="font-mono-accent mb-3 text-xs tracking-[0.3em] text-[#E6007E]">FITTING ROOM</p>
+        <h1 className="font-serif-display text-4xl font-semibold tracking-tight text-[#3E2A33] sm:text-5xl">
           Find your dog's perfect fit
         </h1>
         <p className="mt-4 text-base leading-relaxed text-[#5A6572] sm:text-lg">
@@ -123,8 +123,8 @@ export default function FittingRoomPage() {
               onClick={() => setActive(tab)}
               className={`inline-flex items-center gap-2 rounded-full border px-5 py-2.5 text-sm font-semibold transition-colors ${
                 active.id === tab.id
-                  ? "border-[#1C2A39] bg-[#1C2A39] text-[#FDFBF7]"
-                  : "border-[#1C2A39]/20 text-[#1C2A39] hover:border-[#D96B43] hover:text-[#D96B43]"
+                  ? "border-[#3E2A33] bg-[#3E2A33] text-[#FDF7FA]"
+                  : "border-[#3E2A33]/20 text-[#3E2A33] hover:border-[#E6007E] hover:text-[#E6007E]"
               }`}
             >
               <Icon className="h-4 w-4" />
@@ -143,11 +143,11 @@ export default function FittingRoomPage() {
         data-testid={`fitting-panel-${active.id}`}
       >
         <div>
-          <h2 className="font-serif-display text-2xl font-semibold text-[#1C2A39]">{active.intro}</h2>
+          <h2 className="font-serif-display text-2xl font-semibold text-[#3E2A33]">{active.intro}</h2>
           <ul className="mt-6 space-y-3.5">
             {active.tips.map((tip) => (
               <li key={tip} className="flex items-start gap-3 text-sm leading-relaxed text-[#5A6572]">
-                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#D96B43]" />
+                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#E6007E]" />
                 {tip}
               </li>
             ))}
@@ -155,17 +155,17 @@ export default function FittingRoomPage() {
           <Link
             to={active.shopTo}
             data-testid={`fitting-shop-${active.id}`}
-            className="group mt-8 inline-flex items-center gap-2 rounded-full bg-[#1C2A39] px-7 py-3.5 text-sm font-semibold text-[#FDFBF7] transition-colors hover:bg-[#D96B43]"
+            className="group mt-8 inline-flex items-center gap-2 rounded-full bg-[#3E2A33] px-7 py-3.5 text-sm font-semibold text-[#FDF7FA] transition-colors hover:bg-[#E6007E]"
           >
             {active.shopLabel}
             <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
           </Link>
         </div>
 
-        <div className="h-fit overflow-hidden rounded-3xl border border-[#1C2A39]/10 bg-white shadow-sm">
-          <table className="w-full text-sm" data-testid={`fitting-table-${active.id}`}>
+        <div className="h-fit overflow-x-auto rounded-3xl border border-[#3E2A33]/10 bg-white shadow-sm">
+          <table className="w-full min-w-[420px] text-sm" data-testid={`fitting-table-${active.id}`}>
             <thead>
-              <tr className="bg-[#1C2A39] text-left text-[#FDFBF7]">
+              <tr className="bg-[#3E2A33] text-left text-[#FDF7FA]">
                 {active.columns.map((col) => (
                   <th key={col} className="font-mono-accent px-6 py-4 text-[10px] font-bold tracking-[0.2em]">
                     {col.toUpperCase()}
@@ -175,9 +175,9 @@ export default function FittingRoomPage() {
             </thead>
             <tbody>
               {active.rows.map((row) => (
-                <tr key={row[0]} className="border-t border-[#1C2A39]/5">
+                <tr key={row[0]} className="border-t border-[#3E2A33]/5">
                   {row.map((cell, i) => (
-                    <td key={cell} className={`px-6 py-3.5 ${i === 0 ? "font-serif-display font-bold text-[#1C2A39]" : "text-[#5A6572]"}`}>
+                    <td key={cell} className={`px-6 py-3.5 ${i === 0 ? "font-serif-display font-bold text-[#3E2A33]" : "text-[#5A6572]"}`}>
                       {cell}
                     </td>
                   ))}
@@ -185,7 +185,7 @@ export default function FittingRoomPage() {
               ))}
             </tbody>
           </table>
-          <p className="border-t border-[#1C2A39]/10 bg-[#F4EFEA] px-6 py-4 text-xs leading-relaxed text-[#5A6572]">{active.note}</p>
+          <p className="border-t border-[#3E2A33]/10 bg-[#FBEEF4] px-6 py-4 text-xs leading-relaxed text-[#5A6572]">{active.note}</p>
         </div>
       </motion.div>
     </main>

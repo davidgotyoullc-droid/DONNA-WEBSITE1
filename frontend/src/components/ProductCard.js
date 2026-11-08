@@ -17,7 +17,7 @@ export default function ProductCard({ product, index = 0 }) {
       className="group w-[270px] shrink-0 snap-start sm:w-[300px]"
       data-testid={`product-card-${product.slug}`}
     >
-      <div className="relative aspect-square overflow-hidden rounded-3xl bg-[#F4EFEA]">
+      <div className="relative aspect-square overflow-hidden rounded-3xl bg-[#FBEEF4]">
         <Link to={`/product/${product.slug}`} data-testid={`product-link-${product.slug}`} aria-label={product.name}>
           <img
             src={product.images.main}
@@ -35,7 +35,7 @@ export default function ProductCard({ product, index = 0 }) {
         {tag && (
           <span
             data-testid={`product-tag-${product.slug}`}
-            className="font-mono-accent absolute left-3 top-3 rounded-full bg-[#1C2A39] px-3 py-1 text-[10px] tracking-[0.15em] text-[#FDFBF7]"
+            className="font-mono-accent absolute left-3 top-3 rounded-full bg-[#3E2A33] px-3 py-1 text-[10px] tracking-[0.15em] text-[#FDF7FA]"
           >
             {tag.toUpperCase()}
           </span>
@@ -43,7 +43,7 @@ export default function ProductCard({ product, index = 0 }) {
         <button
           data-testid={`quick-view-${product.slug}`}
           onClick={() => setQuickView(product)}
-          className="absolute inset-x-3 bottom-3 translate-y-3 rounded-full bg-[#FDFBF7]/95 py-2.5 text-sm font-semibold text-[#1C2A39] opacity-0 shadow-lg backdrop-blur transition-all duration-300 hover:bg-[#1C2A39] hover:text-[#FDFBF7] group-hover:translate-y-0 group-hover:opacity-100"
+          className="absolute inset-x-3 bottom-3 translate-y-3 rounded-full bg-[#FDF7FA]/95 py-2.5 text-sm font-semibold text-[#3E2A33] opacity-0 shadow-lg backdrop-blur transition-all duration-300 hover:bg-[#3E2A33] hover:text-[#FDF7FA] group-hover:translate-y-0 group-hover:opacity-100"
         >
           Quick view
         </button>
@@ -51,19 +51,19 @@ export default function ProductCard({ product, index = 0 }) {
       <div className="mt-4 flex items-start justify-between gap-3">
         <div>
           <Link to={`/product/${product.slug}`}>
-            <h3 className="font-serif-display text-lg font-semibold leading-snug text-[#1C2A39] transition-colors hover:text-[#D96B43]">
+            <h3 className="font-serif-display text-lg font-semibold leading-snug text-[#3E2A33] transition-colors hover:text-[#E6007E]">
               {product.name}
             </h3>
           </Link>
           <p className="font-mono-accent mt-1 text-[10px] tracking-[0.2em] text-[#5A6572]">{product.category.toUpperCase()}</p>
-          <div className="mt-1.5 flex items-center gap-1 text-[#C8963E]">
+          <div className="mt-1.5 flex items-center gap-1 text-[#E6007E]">
             {Array.from({ length: 5 }).map((_, i) => (
               <Star key={i} className={`h-3 w-3 ${i < Math.round(product.rating) ? "fill-current" : "opacity-30"}`} />
             ))}
             <span className="ml-1 text-xs text-[#5A6572]">({product.reviews})</span>
           </div>
         </div>
-        <p className="font-serif-display text-lg font-bold text-[#1C2A39]" data-testid={`product-price-${product.slug}`}>
+        <p className="font-serif-display text-lg font-bold text-[#3E2A33]" data-testid={`product-price-${product.slug}`}>
           {formatPrice(product.price_cents)}
         </p>
       </div>

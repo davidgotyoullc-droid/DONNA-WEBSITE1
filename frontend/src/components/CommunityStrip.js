@@ -19,8 +19,8 @@ export default function CommunityStrip() {
         transition={{ duration: 0.7 }}
         className="mb-10 text-center"
       >
-        <p className="font-mono-accent mb-3 text-xs tracking-[0.3em] text-[#D96B43]">JOIN THE PACK</p>
-        <h2 className="font-serif-display text-3xl font-semibold tracking-tight text-[#1C2A39] sm:text-4xl">
+        <p className="font-mono-accent mb-3 text-xs tracking-[0.3em] text-[#E6007E]">JOIN THE PACK</p>
+        <h2 className="font-serif-display text-3xl font-semibold tracking-tight text-[#3E2A33] sm:text-4xl">
           #DonnaDevlinDogs
         </h2>
       </motion.div>

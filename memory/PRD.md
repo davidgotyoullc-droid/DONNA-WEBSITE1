@@ -17,6 +17,14 @@ An original, award-tier e-commerce storefront for Donna Devlin Designs (handcraf
 - Boutique gift buyer drawn to whimsical prints and craft.
 - Wholesale stockist using the enquiry form.
 
+## Implemented (2026-11-08, v3)
+- Real Donna Devlin Designs brand: actual logo (from donnadevlindesigns.com) in navbar, footer, sign-in card and favicon; full palette rebrand to brand colors — magenta #E6007E, blush #FDF7FA / #FBEEF4, deep espresso #3E2A33, olive #7D8F4E; announcement bar now brand pink.
+- Motion calmed: hero flipbook 140ms→750ms with soft crossfade; category glitch 150ms→450ms with gentle crossfade, subtler jitter/scanlines.
+- Customer accounts (JWT httpOnly cookies, bcrypt, 5-attempt lockout): /signin (sign in + create account tabs), /account (profile + order history via GET /api/orders), checkout links orders to signed-in users. Test users in test_credentials.md.
+- New /products "Our Products" page — four alternating editorial sections (vests, harnesses, collars, leashes) with feature lists and shop CTAs.
+- Review cards now use 6 new AI-generated candid customer-style photos (people with their dogs) instead of catalog product shots.
+- Responsive re-optimization verified: no horizontal overflow at 375/768/1366; mobile nav (lg breakpoint), fitting tables scroll on small screens, review photos wrap.
+
 ## Implemented (2026-11-07, v2)
 - Hero main image is now a true gif-style flipbook: 6 AI-generated pose frames of the same poodle stepped at 140ms with an "IN MOTION" tag; the small detail sub-frame stays static, parallax kept.
 - Category tiles ("Shop our signature pieces") come alive on hover: rapid 4-frame glitch flipbook (150ms/frame) with scanline + jitter effect, looping until the cursor leaves. 4 extra AI frames generated for collars/leashes.

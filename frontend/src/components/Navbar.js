@@ -1,20 +1,27 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
-import { Menu, ShoppingBag, X } from "lucide-react";
+import { Menu, ShoppingBag, User, X } from "lucide-react";
 import Logo from "@/components/Logo";
 import { useCart } from "@/context/CartContext";
+import { useAuth } from "@/context/AuthContext";
 
 const LINKS = [
+  { label: "Our Products", to: "/products" },
   { label: "Shop", to: "/shop" },
   { label: "Fitting Room", to: "/fitting-room" },
+  { label: "Store Locator", to: "/store-locator" },
+  { label: "Wholesale", to: "/wholesale" },
+];
+
+const MOBILE_EXTRA = [
   { label: "Our Story", to: "/#story" },
-  { label: "Why Choke-Free", to: "/#choke-free" },
   { label: "Contact", to: "/#contact" },
 ];
 
 export default function Navbar() {
   const { count, setIsCartOpen } = useCart();
+  const { user } = useAuth();
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -32,41 +39,51 @@ export default function Navbar() {
   return (
     <header
       data-testid="navbar"
-      className="sticky top-0 z-40 border-b border-[#1C2A39]/10 bg-[#FDFBF7]/90 backdrop-blur-md"
+      className="sticky top-0 z-40 border-b border-[#3E2A33]/10 bg-[#FDF7FA]/90 backdrop-blur-md"
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6">
-        <button onClick={() => go("/shop")} data-testid="nav-logo-link" className="text-left">
-          <Link to="/" onClick={(e) => e.stopPropagation()}>
-            <Logo />
-          </Link>
-        </button>
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-2.5 sm:px-6">
+        <Link to="/" data-testid="nav-logo-link" className="shrink-0">
+          <Logo />
+        </Link>
 
-        <nav className="hidden items-center gap-8 md:flex" data-testid="nav-links">
+        <nav className="hidden items-center gap-6 lg:flex xl:gap-8" data-testid="nav-links">
           {LINKS.map((link) => (
             <button
               key={link.label}
               data-testid={`nav-link-${link.label.toLowerCase().replace(/\s+/g, "-")}`}
               onClick={() => go(link.to)}
-              className="group relative text-sm font-medium text-[#1C2A39] transition-colors hover:text-[#D96B43]"
+              className="group relative whitespace-nowrap text-sm font-medium text-[#3E2A33] transition-colors hover:text-[#E6007E]"
             >
               {link.label}
-              <span className="absolute -bottom-1 left-0 h-px w-0 bg-[#D96B43] transition-[width] duration-300 group-hover:w-full" />
+              <span className="absolute -bottom-1 left-0 h-px w-0 bg-[#E6007E] transition-[width] duration-300 group-hover:w-full" />
             </button>
           ))}
         </nav>
 
         <div className="flex items-center gap-2">
+          <Link
+            to={user ? "/account" : "/signin"}
+            data-testid="account-link"
+            className="flex h-11 w-11 items-center justify-center rounded-full border border-[#3E2A33]/15 bg-white/60 text-[#3E2A33] transition-colors hover:border-[#E6007E] hover:text-[#E6007E]"
+            aria-label={user ? "My account" : "Sign in"}
+          >
+            {user && user.name ? (
+              <span className="text-sm font-bold text-[#E6007E]">{user.name[0].toUpperCase()}</span>
+            ) : (
+              <User className="h-5 w-5" />
+            )}
+          </Link>
           <button
             data-testid="cart-open-button"
             onClick={() => setIsCartOpen(true)}
-            className="relative flex h-11 w-11 items-center justify-center rounded-full border border-[#1C2A39]/15 bg-white/60 text-[#1C2A39] transition-colors hover:border-[#D96B43] hover:text-[#D96B43]"
+            className="relative flex h-11 w-11 items-center justify-center rounded-full border border-[#3E2A33]/15 bg-white/60 text-[#3E2A33] transition-colors hover:border-[#E6007E] hover:text-[#E6007E]"
             aria-label="Open cart"
           >
             <ShoppingBag className="h-5 w-5" />
             {count > 0 && (
               <span
                 data-testid="cart-count-badge"
-                className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-[#D96B43] text-[10px] font-bold text-[#FDFBF7]"
+                className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-[#E6007E] text-[10px] font-bold text-[#FDF7FA]"
               >
                 {count}
               </span>
@@ -75,7 +92,7 @@ export default function Navbar() {
           <button
             data-testid="mobile-menu-button"
             onClick={() => setOpen((o) => !o)}
-            className="flex h-11 w-11 items-center justify-center rounded-full border border-[#1C2A39]/15 text-[#1C2A39] md:hidden"
+            className="flex h-11 w-11 items-center justify-center rounded-full border border-[#3E2A33]/15 text-[#3E2A33] lg:hidden"
             aria-label="Menu"
           >
             {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -90,20 +107,27 @@ export default function Navbar() {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.25 }}
-            className="overflow-hidden border-t border-[#1C2A39]/10 md:hidden"
+            className="overflow-hidden border-t border-[#3E2A33]/10 lg:hidden"
             data-testid="mobile-menu"
           >
             <div className="flex flex-col px-6 py-4">
-              {LINKS.map((link) => (
+              {[...LINKS, ...MOBILE_EXTRA].map((link) => (
                 <button
                   key={link.label}
                   data-testid={`mobile-nav-link-${link.label.toLowerCase().replace(/\s+/g, "-")}`}
                   onClick={() => go(link.to)}
-                  className="border-b border-[#1C2A39]/5 py-3 text-left font-serif-display text-lg text-[#1C2A39]"
+                  className="border-b border-[#3E2A33]/5 py-3 text-left font-serif-display text-lg text-[#3E2A33]"
                 >
                   {link.label}
                 </button>
               ))}
+              <button
+                data-testid="mobile-nav-link-sign-in"
+                onClick={() => go(user ? "/account" : "/signin")}
+                className="py-3 text-left font-serif-display text-lg text-[#E6007E]"
+              >
+                {user ? "My account" : "Sign in"}
+              </button>
             </div>
           </motion.nav>
         )}

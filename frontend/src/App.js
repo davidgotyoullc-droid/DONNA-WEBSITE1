@@ -3,6 +3,7 @@ import "@/App.css";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Lenis from "lenis";
 import { CartProvider } from "@/context/CartContext";
+import { AuthProvider } from "@/context/AuthContext";
 import { Toaster } from "@/components/ui/sonner";
 import AnnouncementBar from "@/components/AnnouncementBar";
 import Navbar from "@/components/Navbar";
@@ -12,10 +13,13 @@ import QuickViewModal from "@/components/QuickViewModal";
 import HomePage from "@/pages/HomePage";
 import ShopPage from "@/pages/ShopPage";
 import ProductPage from "@/pages/ProductPage";
+import ProductsPage from "@/pages/ProductsPage";
 import FittingRoomPage from "@/pages/FittingRoomPage";
 import StoreLocatorPage from "@/pages/StoreLocatorPage";
 import WholesalePage from "@/pages/WholesalePage";
 import SignupPage from "@/pages/SignupPage";
+import SignInPage from "@/pages/SignInPage";
+import AccountPage from "@/pages/AccountPage";
 import PaymentSuccess from "@/pages/PaymentSuccess";
 import PaymentCancel from "@/pages/PaymentCancel";
 
@@ -48,26 +52,31 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <CartProvider>
-          <ScrollManager lenisRef={lenisRef} />
-          <AnnouncementBar />
-          <Navbar />
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/shop" element={<ShopPage />} />
-            <Route path="/product/:slug" element={<ProductPage />} />
-            <Route path="/fitting-room" element={<FittingRoomPage />} />
-            <Route path="/store-locator" element={<StoreLocatorPage />} />
-            <Route path="/wholesale" element={<WholesalePage />} />
-            <Route path="/signup" element={<SignupPage />} />
-            <Route path="/payment/success" element={<PaymentSuccess />} />
-            <Route path="/payment/cancel" element={<PaymentCancel />} />
-          </Routes>
-          <Footer />
-          <CartDrawer />
-          <QuickViewModal />
-          <Toaster position="bottom-right" toastOptions={{ style: { background: "#1C2A39", color: "#FDFBF7", border: "none" } }} />
-        </CartProvider>
+        <AuthProvider>
+          <CartProvider>
+            <ScrollManager lenisRef={lenisRef} />
+            <AnnouncementBar />
+            <Navbar />
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/shop" element={<ShopPage />} />
+              <Route path="/products" element={<ProductsPage />} />
+              <Route path="/product/:slug" element={<ProductPage />} />
+              <Route path="/fitting-room" element={<FittingRoomPage />} />
+              <Route path="/store-locator" element={<StoreLocatorPage />} />
+              <Route path="/wholesale" element={<WholesalePage />} />
+              <Route path="/signup" element={<SignupPage />} />
+              <Route path="/signin" element={<SignInPage />} />
+              <Route path="/account" element={<AccountPage />} />
+              <Route path="/payment/success" element={<PaymentSuccess />} />
+              <Route path="/payment/cancel" element={<PaymentCancel />} />
+            </Routes>
+            <Footer />
+            <CartDrawer />
+            <QuickViewModal />
+            <Toaster position="bottom-right" toastOptions={{ style: { background: "#3E2A33", color: "#FDF7FA", border: "none" } }} />
+          </CartProvider>
+        </AuthProvider>
       </BrowserRouter>
     </div>
   );

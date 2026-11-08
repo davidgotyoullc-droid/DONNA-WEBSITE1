@@ -2,13 +2,16 @@ import asyncio
 import logging
 import os
 from contextlib import suppress
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import List, Optional
 
+import bcrypt
+import jwt
 import stripe
+from bson import ObjectId
 from dotenv import load_dotenv
-from fastapi import FastAPI, APIRouter, HTTPException, Query, Request
+from fastapi import FastAPI, APIRouter, HTTPException, Request, Response
 from motor.motor_asyncio import AsyncIOMotorClient
 from pydantic import BaseModel, Field, EmailStr
 from pymongo import ASCENDING, IndexModel
@@ -119,6 +122,8 @@ INDEXES = {
     "enquiries": [IndexModel([("created_at", ASCENDING)], name="created_at")],
     "newsletter": [IndexModel([("email", ASCENDING)], name="email", unique=True)],
     "payment_transactions": [IndexModel([("session_id", ASCENDING)], name="session_id", unique=True)],
+    "users": [IndexModel([("email", ASCENDING)], name="email", unique=True)],
+    "login_attempts": [IndexModel([("identifier", ASCENDING)], name="identifier")],
 }
 
 async def ensure_indexes() -> None:
@@ -184,6 +189,136 @@ async def newsletter(signup: NewsletterSignup):
     )
     return {"ok": True}
 
+# ---------- Auth ----------
+
+JWT_ALGORITHM = "HS256"
+
+def hash_password(password: str) -> str:
+    return bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
+
+def verify_password(plain: str, hashed: str) -> bool:
+    return bcrypt.checkpw(plain.encode("utf-8"), hashed.encode("utf-8"))
+
+def create_access_token(user_id: str, email: str) -> str:
+    payload = {"sub": user_id, "email": email, "exp": datetime.now(timezone.utc) + timedelta(minutes=15), "type": "access"}
+    return jwt.encode(payload, os.environ["JWT_SECRET"], algorithm=JWT_ALGORITHM)
+
+def create_refresh_token(user_id: str) -> str:
+    payload = {"sub": user_id, "exp": datetime.now(timezone.utc) + timedelta(days=7), "type": "refresh"}
+    return jwt.encode(payload, os.environ["JWT_SECRET"], algorithm=JWT_ALGORITHM)
+
+def set_auth_cookies(response: Response, user_id: str, email: str) -> None:
+    response.set_cookie("access_token", create_access_token(user_id, email), httponly=True, secure=True, samesite="none", max_age=900, path="/")
+    response.set_cookie("refresh_token", create_refresh_token(user_id), httponly=True, secure=True, samesite="none", max_age=604800, path="/")
+
+async def get_current_user(request: Request) -> dict:
+    token = request.cookies.get("access_token")
+    if not token:
+        auth_header = request.headers.get("Authorization", "")
+        if auth_header.startswith("Bearer "):
+            token = auth_header[7:]
+    if not token:
+        raise HTTPException(401, "Not authenticated")
+    try:
+        payload = jwt.decode(token, os.environ["JWT_SECRET"], algorithms=[JWT_ALGORITHM])
+        if payload.get("type") != "access":
+            raise HTTPException(401, "Invalid token type")
+    except jwt.ExpiredSignatureError:
+        raise HTTPException(401, "Token expired")
+    except jwt.InvalidTokenError:
+        raise HTTPException(401, "Invalid token")
+    user = await db.users.find_one({"_id": ObjectId(payload["sub"])})
+    if not user:
+        raise HTTPException(401, "User not found")
+    return {"id": str(user["_id"]), "email": user["email"], "name": user.get("name", ""), "created_at": user.get("created_at")}
+
+async def get_optional_user(request: Request):
+    try:
+        return await get_current_user(request)
+    except HTTPException:
+        return None
+
+def public_user(user: dict) -> dict:
+    return {"id": str(user["_id"]), "email": user["email"], "name": user.get("name", "")}
+
+class RegisterRequest(BaseModel):
+    name: str = Field(min_length=1, max_length=120)
+    email: EmailStr
+    password: str = Field(min_length=6, max_length=128)
+
+class LoginRequest(BaseModel):
+    email: EmailStr
+    password: str
+
+@api_router.post("/auth/register")
+async def register(req: RegisterRequest, response: Response):
+    email = req.email.lower()
+    if await db.users.find_one({"email": email}):
+        raise HTTPException(409, "An account with this email already exists")
+    doc = {
+        "name": req.name,
+        "email": email,
+        "password_hash": hash_password(req.password),
+        "role": "customer",
+        "created_at": datetime.now(timezone.utc).isoformat(),
+    }
+    result = await db.users.insert_one(doc)
+    set_auth_cookies(response, str(result.inserted_id), email)
+    return public_user({"_id": result.inserted_id, **doc})
+
+@api_router.post("/auth/login")
+async def login(req: LoginRequest, request: Request, response: Response):
+    email = req.email.lower()
+    identifier = f"{request.client.host}:{email}"
+    attempts = await db.login_attempts.find_one({"identifier": identifier})
+    if attempts and attempts.get("count", 0) >= 5 and attempts.get("locked_until"):
+        locked_until = datetime.fromisoformat(attempts["locked_until"])
+        if locked_until > datetime.now(timezone.utc):
+            raise HTTPException(429, "Too many attempts — please try again in 15 minutes")
+    user = await db.users.find_one({"email": email})
+    if not user or not verify_password(req.password, user["password_hash"]):
+        await db.login_attempts.update_one(
+            {"identifier": identifier},
+            {"$inc": {"count": 1}, "$set": {"locked_until": (datetime.now(timezone.utc) + timedelta(minutes=15)).isoformat()}},
+            upsert=True,
+        )
+        raise HTTPException(401, "Incorrect email or password")
+    await db.login_attempts.delete_one({"identifier": identifier})
+    set_auth_cookies(response, str(user["_id"]), email)
+    return public_user(user)
+
+@api_router.post("/auth/logout")
+async def logout(response: Response):
+    response.delete_cookie("access_token", path="/")
+    response.delete_cookie("refresh_token", path="/")
+    return {"ok": True}
+
+@api_router.get("/auth/me")
+async def me(request: Request):
+    return await get_current_user(request)
+
+@api_router.post("/auth/refresh")
+async def refresh(request: Request, response: Response):
+    token = request.cookies.get("refresh_token")
+    if not token:
+        raise HTTPException(401, "Not authenticated")
+    try:
+        payload = jwt.decode(token, os.environ["JWT_SECRET"], algorithms=[JWT_ALGORITHM])
+        if payload.get("type") != "refresh":
+            raise HTTPException(401, "Invalid token type")
+    except jwt.PyJWTError:
+        raise HTTPException(401, "Invalid token")
+    user = await db.users.find_one({"_id": ObjectId(payload["sub"])})
+    if not user:
+        raise HTTPException(401, "User not found")
+    response.set_cookie("access_token", create_access_token(str(user["_id"]), user["email"]), httponly=True, secure=True, samesite="none", max_age=900, path="/")
+    return public_user(user)
+
+@api_router.get("/orders")
+async def my_orders(request: Request):
+    user = await get_current_user(request)
+    return await db.payment_transactions.find({"user_id": user["id"]}, {"_id": 0}).sort("created_at", -1).to_list(50)
+
 # ---------- Stripe checkout ----------
 
 class CheckoutItem(BaseModel):
@@ -196,11 +331,12 @@ class CheckoutRequest(BaseModel):
     origin_url: str
 
 @api_router.post("/payments/checkout")
-async def create_checkout(req: CheckoutRequest):
+async def create_checkout(req: CheckoutRequest, request: Request):
     stripe_key = os.environ.get("STRIPE_SECRET_KEY")
     if not stripe_key:
         raise HTTPException(503, "Checkout is not configured yet")
     stripe.api_key = stripe_key
+    user = await get_optional_user(request)
 
     line_items = []
     summary = []
@@ -224,10 +360,13 @@ async def create_checkout(req: CheckoutRequest):
         cancel_url=f"{req.origin_url}/payment/cancel",
         automatic_tax={"enabled": True},
         billing_address_collection="required",
+        customer_email=user["email"] if user else None,
         metadata={"cart": "; ".join(summary)[:450]},
     )
     await db.payment_transactions.insert_one({
         "session_id": session.id,
+        "user_id": user["id"] if user else None,
+        "email": user["email"] if user else None,
         "items": [i.model_dump() for i in req.items],
         "amount": total_cents,
         "currency": "usd",
@@ -295,7 +434,7 @@ app.include_router(api_router)
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
-    allow_origins=os.environ.get('CORS_ORIGINS', '*').split(','),
+    allow_origins=[os.environ.get("FRONTEND_URL", "http://localhost:3000")],
     allow_methods=["*"],
     allow_headers=["*"],
 )

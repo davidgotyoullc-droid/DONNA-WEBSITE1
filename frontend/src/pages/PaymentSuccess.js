@@ -40,8 +40,8 @@ export default function PaymentSuccess() {
 
   return (
     <main data-testid="payment-success-page" className="mx-auto flex max-w-2xl flex-col items-center px-4 py-32 text-center">
-      <CheckCircle2 className="h-16 w-16 text-[#8A9A86]" />
-      <h1 className="font-serif-display mt-6 text-3xl font-semibold text-[#1C2A39] sm:text-4xl">
+      <CheckCircle2 className="h-16 w-16 text-[#7D8F4E]" />
+      <h1 className="font-serif-display mt-6 text-3xl font-semibold text-[#3E2A33] sm:text-4xl">
         {status === "paid" ? "Thank you — order received" : status === "checking" ? "Confirming your order…" : "Order received"}
       </h1>
       <p className="mt-4 text-base leading-relaxed text-[#5A6572]">
@@ -54,7 +54,7 @@ export default function PaymentSuccess() {
       <Link
         to="/shop"
         data-testid="payment-success-continue"
-        className="mt-8 rounded-full bg-[#1C2A39] px-8 py-3.5 text-sm font-semibold text-[#FDFBF7] transition-colors hover:bg-[#D96B43]"
+        className="mt-8 rounded-full bg-[#3E2A33] px-8 py-3.5 text-sm font-semibold text-[#FDF7FA] transition-colors hover:bg-[#E6007E]"
       >
         Continue browsing
       </Link>

@@ -27,10 +27,10 @@ export default function ContactForm() {
   };
 
   const inputCls =
-    "w-full rounded-2xl border border-[#1C2A39]/15 bg-white px-5 py-3.5 text-sm text-[#1C2A39] outline-none transition-colors placeholder:text-[#5A6572]/60 focus:border-[#D96B43] focus:ring-2 focus:ring-[#D96B43]/30";
+    "w-full rounded-2xl border border-[#3E2A33]/15 bg-white px-5 py-3.5 text-sm text-[#3E2A33] outline-none transition-colors placeholder:text-[#5A6572]/60 focus:border-[#E6007E] focus:ring-2 focus:ring-[#E6007E]/30";
 
   return (
-    <section id="contact" data-testid="contact-section" className="bg-[#1C2A39] py-20 lg:py-28">
+    <section id="contact" data-testid="contact-section" className="bg-[#3E2A33] py-20 lg:py-28">
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-14 px-4 sm:px-6 lg:grid-cols-2">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -38,17 +38,17 @@ export default function ContactForm() {
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.7 }}
         >
-          <p className="font-mono-accent mb-3 text-xs tracking-[0.3em] text-[#D96B43]">WRITE TO THE STUDIO</p>
-          <h2 className="font-serif-display text-3xl font-semibold tracking-tight text-[#FDFBF7] sm:text-4xl">
+          <p className="font-mono-accent mb-3 text-xs tracking-[0.3em] text-[#E6007E]">WRITE TO THE STUDIO</p>
+          <h2 className="font-serif-display text-3xl font-semibold tracking-tight text-[#FDF7FA] sm:text-4xl">
             Custom fit? Special print?
             <br />
-            <em className="text-[#D96B43]">Just ask.</em>
+            <em className="text-[#E6007E]">Just ask.</em>
           </h2>
-          <p className="mt-6 max-w-md text-base leading-relaxed text-[#FDFBF7]/70 sm:text-lg">
+          <p className="mt-6 max-w-md text-base leading-relaxed text-[#FDF7FA]/70 sm:text-lg">
             Whether your pup is between sizes, you dream of a print we haven't stitched yet, or you'd
             like to stock the collection — every message lands directly on Donna's worktable.
           </p>
-          <div className="font-mono-accent mt-10 space-y-2 text-xs tracking-[0.2em] text-[#FDFBF7]/50">
+          <div className="font-mono-accent mt-10 space-y-2 text-xs tracking-[0.2em] text-[#FDF7FA]/50">
             <p>REPLIES WITHIN 1–2 BUSINESS DAYS</p>
             <p>HANDCRAFTED IN THE USA</p>
           </div>
@@ -102,7 +102,7 @@ export default function ContactForm() {
             data-testid="contact-submit-button"
             type="submit"
             disabled={sending}
-            className="group inline-flex items-center gap-2 rounded-full bg-[#D96B43] px-8 py-4 text-sm font-semibold text-[#FDFBF7] transition-colors hover:bg-[#FDFBF7] hover:text-[#1C2A39] disabled:opacity-60"
+            className="group inline-flex items-center gap-2 rounded-full bg-[#E6007E] px-8 py-4 text-sm font-semibold text-[#FDF7FA] transition-colors hover:bg-[#FDF7FA] hover:text-[#3E2A33] disabled:opacity-60"
           >
             {sending ? "Sending…" : "Send to the studio"}
             <Send className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-0.5" />

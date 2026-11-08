@@ -16,7 +16,7 @@ export default function AnnouncementBar() {
   }, []);
 
   return (
-    <div data-testid="announcement-bar" className="bg-[#1C2A39] text-[#FDFBF7] text-center text-xs sm:text-sm py-2.5 px-4 overflow-hidden">
+    <div data-testid="announcement-bar" className="bg-[#E6007E] text-white text-center text-xs sm:text-sm py-2.5 px-4 overflow-hidden">
       <AnimatePresence mode="wait">
         <motion.p
           key={index}

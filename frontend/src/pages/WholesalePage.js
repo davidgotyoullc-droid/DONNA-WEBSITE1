@@ -66,19 +66,19 @@ export default function WholesalePage() {
   };
 
   const inputCls =
-    "w-full rounded-2xl border border-[#1C2A39]/15 bg-white px-5 py-3.5 text-sm text-[#1C2A39] outline-none transition-colors placeholder:text-[#5A6572]/60 focus:border-[#D96B43] focus:ring-2 focus:ring-[#D96B43]/30";
+    "w-full rounded-2xl border border-[#3E2A33]/15 bg-white px-5 py-3.5 text-sm text-[#3E2A33] outline-none transition-colors placeholder:text-[#5A6572]/60 focus:border-[#E6007E] focus:ring-2 focus:ring-[#E6007E]/30";
 
   return (
     <main data-testid="wholesale-page" className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:py-20">
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="mb-12 max-w-2xl">
-        <p className="font-mono-accent mb-3 text-xs tracking-[0.3em] text-[#D96B43]">WHOLESALE</p>
-        <h1 className="font-serif-display text-4xl font-semibold tracking-tight text-[#1C2A39] sm:text-5xl">
+        <p className="font-mono-accent mb-3 text-xs tracking-[0.3em] text-[#E6007E]">WHOLESALE</p>
+        <h1 className="font-serif-display text-4xl font-semibold tracking-tight text-[#3E2A33] sm:text-5xl">
           Stock the studio
         </h1>
         <p className="mt-4 text-base leading-relaxed text-[#5A6572] sm:text-lg">
           Wholesale pricing and ordering are open to registered businesses that sell pet products —
           retail stores, groomers, veterinarians and more. Questions first? Write to us at{" "}
-          <a href="mailto:info@donnadevlindesigns.com" className="font-semibold text-[#D96B43] underline underline-offset-2">
+          <a href="mailto:info@donnadevlindesigns.com" className="font-semibold text-[#E6007E] underline underline-offset-2">
             info@donnadevlindesigns.com
           </a>
           .
@@ -93,10 +93,10 @@ export default function WholesalePage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-40px" }}
             transition={{ duration: 0.5, delay: i * 0.08 }}
-            className="rounded-3xl border border-[#1C2A39]/10 bg-white p-6 shadow-sm"
+            className="rounded-3xl border border-[#3E2A33]/10 bg-white p-6 shadow-sm"
           >
-            <CheckCircle2 className="mb-3 h-5 w-5 text-[#8A9A86]" />
-            <h3 className="font-serif-display text-lg font-semibold text-[#1C2A39]">{term.title}</h3>
+            <CheckCircle2 className="mb-3 h-5 w-5 text-[#7D8F4E]" />
+            <h3 className="font-serif-display text-lg font-semibold text-[#3E2A33]">{term.title}</h3>
             <p className="mt-1.5 text-sm leading-relaxed text-[#5A6572]">{term.detail}</p>
           </motion.div>
         ))}
@@ -110,7 +110,7 @@ export default function WholesalePage() {
           transition={{ duration: 0.6 }}
           className="lg:col-span-2"
         >
-          <h2 className="font-serif-display text-2xl font-semibold text-[#1C2A39] sm:text-3xl">How approval works</h2>
+          <h2 className="font-serif-display text-2xl font-semibold text-[#3E2A33] sm:text-3xl">How approval works</h2>
           <ol className="mt-6 space-y-5">
             {[
               "Send the application with your company name, current Tax ID / resale certificate number and a valid email.",
@@ -119,7 +119,7 @@ export default function WholesalePage() {
               "Your first order ships with a complimentary welcome packet and storefront display sign.",
             ].map((step, i) => (
               <li key={step} className="flex items-start gap-4">
-                <span className="font-serif-display flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#D96B43] text-sm font-bold text-[#FDFBF7]">
+                <span className="font-serif-display flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#E6007E] text-sm font-bold text-[#FDF7FA]">
                   {i + 1}
                 </span>
                 <p className="pt-1.5 text-sm leading-relaxed text-[#5A6572]">{step}</p>
@@ -134,10 +134,10 @@ export default function WholesalePage() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="space-y-4 rounded-3xl border border-[#1C2A39]/10 bg-[#F4EFEA] p-6 sm:p-8 lg:col-span-3"
+          className="space-y-4 rounded-3xl border border-[#3E2A33]/10 bg-[#FBEEF4] p-6 sm:p-8 lg:col-span-3"
           data-testid="wholesale-form"
         >
-          <h2 className="font-serif-display text-2xl font-semibold text-[#1C2A39]">Wholesale application</h2>
+          <h2 className="font-serif-display text-2xl font-semibold text-[#3E2A33]">Wholesale application</h2>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <input data-testid="wholesale-company-input" required value={form.company} onChange={set("company")} placeholder="Company name *" className={inputCls} />
             <input data-testid="wholesale-name-input" required value={form.name} onChange={set("name")} placeholder="Your name *" className={inputCls} />
@@ -158,8 +158,8 @@ export default function WholesalePage() {
                   onClick={() => toggleChannel(channel)}
                   className={`rounded-full border px-4 py-2 text-xs font-semibold transition-colors ${
                     form.channels.includes(channel)
-                      ? "border-[#1C2A39] bg-[#1C2A39] text-[#FDFBF7]"
-                      : "border-[#1C2A39]/20 bg-white text-[#1C2A39] hover:border-[#D96B43]"
+                      ? "border-[#3E2A33] bg-[#3E2A33] text-[#FDF7FA]"
+                      : "border-[#3E2A33]/20 bg-white text-[#3E2A33] hover:border-[#E6007E]"
                   }`}
                 >
                   {channel}
@@ -188,7 +188,7 @@ export default function WholesalePage() {
             data-testid="wholesale-submit-button"
             type="submit"
             disabled={sending}
-            className="group inline-flex items-center gap-2 rounded-full bg-[#D96B43] px-8 py-4 text-sm font-semibold text-[#FDFBF7] transition-colors hover:bg-[#1C2A39] disabled:opacity-60"
+            className="group inline-flex items-center gap-2 rounded-full bg-[#E6007E] px-8 py-4 text-sm font-semibold text-[#FDF7FA] transition-colors hover:bg-[#3E2A33] disabled:opacity-60"
           >
             {sending ? "Sending…" : "Submit application"}
             <Send className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-0.5" />

@@ -17,7 +17,7 @@ export default function BrandStory() {
     <section id="story" ref={ref} data-testid="brand-story" className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:py-28">
       <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-2">
         <div className="relative">
-          <motion.div style={{ y }} className="overflow-hidden rounded-[2rem] border-8 border-white shadow-2xl shadow-[#1C2A39]/15">
+          <motion.div style={{ y }} className="overflow-hidden rounded-[2rem] border-8 border-white shadow-2xl shadow-[#3E2A33]/15">
             <img
               src="/images/story/designer.png"
               alt="Donna Devlin in her studio"
@@ -43,8 +43,8 @@ export default function BrandStory() {
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.7 }}
         >
-          <p className="font-mono-accent mb-3 text-xs tracking-[0.3em] text-[#D96B43]">OUR STORY</p>
-          <h2 className="font-serif-display text-3xl font-semibold tracking-tight text-[#1C2A39] sm:text-4xl">
+          <p className="font-mono-accent mb-3 text-xs tracking-[0.3em] text-[#E6007E]">OUR STORY</p>
+          <h2 className="font-serif-display text-3xl font-semibold tracking-tight text-[#3E2A33] sm:text-4xl">
             Designed with love.
             <br />
             Made for real dogs.
@@ -59,7 +59,7 @@ export default function BrandStory() {
             and sewn in the USA from the softest cotton, in prints chosen to make the everyday walk feel
             like a small occasion.
           </p>
-          <div className="mt-10 grid grid-cols-3 gap-6 border-t border-[#1C2A39]/10 pt-8">
+          <div className="mt-10 grid grid-cols-3 gap-6 border-t border-[#3E2A33]/10 pt-8">
             {STATS.map((stat, i) => (
               <motion.div
                 key={stat.label}
@@ -68,7 +68,7 @@ export default function BrandStory() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.12 }}
               >
-                <p className="font-serif-display text-3xl font-bold text-[#D96B43]">{stat.value}</p>
+                <p className="font-serif-display text-3xl font-bold text-[#E6007E]">{stat.value}</p>
                 <p className="font-mono-accent mt-1 text-[10px] tracking-[0.2em] text-[#5A6572]">{stat.label.toUpperCase()}</p>
               </motion.div>
             ))}
@@ -76,7 +76,7 @@ export default function BrandStory() {
           <a
             href="#contact"
             data-testid="story-contact-link"
-            className="group mt-10 inline-flex items-center gap-2 text-sm font-semibold text-[#1C2A39] transition-colors hover:text-[#D96B43]"
+            className="group mt-10 inline-flex items-center gap-2 text-sm font-semibold text-[#3E2A33] transition-colors hover:text-[#E6007E]"
           >
             Say hello to the studio
             <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />

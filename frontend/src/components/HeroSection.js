@@ -41,28 +41,28 @@ export default function HeroSection() {
   const ySmall = useTransform(scrollYProgress, [0, 1], [0, -60]);
 
   useEffect(() => {
-    const id = setInterval(() => setFrame((f) => (f + 1) % FRAMES.length), 140);
+    const id = setInterval(() => setFrame((f) => (f + 1) % FRAMES.length), 750);
     return () => clearInterval(id);
   }, []);
 
   return (
-    <section ref={sectionRef} data-testid="hero-section" className="texture-grain relative overflow-hidden bg-[#FDFBF7]">
+    <section ref={sectionRef} data-testid="hero-section" className="texture-grain relative overflow-hidden bg-[#FDF7FA]">
       <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-4 pb-20 pt-14 sm:px-6 lg:grid-cols-2 lg:gap-8 lg:pb-28 lg:pt-20">
         <div className="relative z-10">
           <motion.p
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.15, duration: 0.6 }}
-            className="font-mono-accent mb-6 text-xs tracking-[0.3em] text-[#D96B43]"
+            className="font-mono-accent mb-6 text-xs tracking-[0.3em] text-[#E6007E]"
             data-testid="hero-overline"
           >
             HANDCRAFTED WALKING VESTS &amp; HARNESSES
           </motion.p>
 
-          <h1 className="font-serif-display text-4xl font-bold leading-[1.08] tracking-tight text-[#1C2A39] sm:text-5xl lg:text-6xl" data-testid="hero-heading">
+          <h1 className="font-serif-display text-4xl font-bold leading-[1.08] tracking-tight text-[#3E2A33] sm:text-5xl lg:text-6xl" data-testid="hero-heading">
             {LINES.map((line, i) => (
               <MaskedLine key={line.text} delay={0.25 + i * 0.14}>
-                {line.accent ? <em className="text-[#D96B43]">{line.text}</em> : line.text}
+                {line.accent ? <em className="text-[#E6007E]">{line.text}</em> : line.text}
               </MaskedLine>
             ))}
           </h1>
@@ -87,7 +87,7 @@ export default function HeroSection() {
             <Link
               to="/shop"
               data-testid="hero-shop-button"
-              className="group inline-flex items-center gap-2 rounded-full bg-[#1C2A39] px-7 py-3.5 text-sm font-semibold text-[#FDFBF7] transition-colors hover:bg-[#D96B43]"
+              className="group inline-flex items-center gap-2 rounded-full bg-[#3E2A33] px-7 py-3.5 text-sm font-semibold text-[#FDF7FA] transition-colors hover:bg-[#E6007E]"
             >
               Shop the collection
               <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
@@ -95,7 +95,7 @@ export default function HeroSection() {
             <Link
               to="/fitting-room"
               data-testid="hero-fit-button"
-              className="inline-flex items-center gap-2 rounded-full border border-[#1C2A39]/20 px-7 py-3.5 text-sm font-semibold text-[#1C2A39] transition-colors hover:border-[#D96B43] hover:text-[#D96B43]"
+              className="inline-flex items-center gap-2 rounded-full border border-[#3E2A33]/20 px-7 py-3.5 text-sm font-semibold text-[#3E2A33] transition-colors hover:border-[#E6007E] hover:text-[#E6007E]"
             >
               <Ruler className="h-4 w-4" />
               Find your perfect fit
@@ -120,7 +120,7 @@ export default function HeroSection() {
             initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.9, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            className="relative aspect-[4/5] w-full overflow-hidden rounded-[2rem] border-8 border-white shadow-2xl shadow-[#1C2A39]/20"
+            className="relative aspect-[4/5] w-full overflow-hidden rounded-[2rem] border-8 border-white shadow-2xl shadow-[#3E2A33]/20"
             data-testid="hero-main-frame"
           >
             {FRAMES.map((src, i) => (
@@ -128,15 +128,14 @@ export default function HeroSection() {
                 key={src}
                 src={src}
                 alt={i === 0 ? "Dog wearing a handcrafted Donna Devlin floral walking vest" : ""}
-                className={`absolute inset-0 h-full w-full object-cover ${i === frame ? "opacity-100" : "opacity-0"}`}
-                style={{ transform: i === frame ? "scale(1.02)" : "scale(1.02)" }}
+                className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ease-in-out ${i === frame ? "opacity-100" : "opacity-0"}`}
               />
             ))}
             <span
               data-testid="hero-live-tag"
-              className="font-mono-accent absolute left-4 top-4 flex items-center gap-1.5 rounded-full bg-[#1C2A39]/85 px-3 py-1.5 text-[9px] font-bold tracking-[0.2em] text-[#FDFBF7] backdrop-blur"
+              className="font-mono-accent absolute left-4 top-4 flex items-center gap-1.5 rounded-full bg-[#3E2A33]/85 px-3 py-1.5 text-[9px] font-bold tracking-[0.2em] text-[#FDF7FA] backdrop-blur"
             >
-              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#D96B43]" />
+              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#E6007E]" />
               IN MOTION
             </span>
           </motion.div>
@@ -146,7 +145,7 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute -bottom-8 -left-4 hidden w-44 overflow-hidden rounded-3xl border-8 border-white shadow-xl shadow-[#1C2A39]/25 sm:block lg:-left-12 lg:w-56"
+            className="absolute -bottom-8 -left-4 hidden w-44 overflow-hidden rounded-3xl border-8 border-white shadow-xl shadow-[#3E2A33]/25 sm:block lg:-left-12 lg:w-56"
             data-testid="hero-detail-frame"
           >
             <img src="/images/hero/hero-3.png" alt="Hand-stitched cotton detail" className="aspect-square w-full object-cover" />
@@ -156,7 +155,7 @@ export default function HeroSection() {
             initial={{ opacity: 0, rotate: -12, scale: 0.8 }}
             animate={{ opacity: 1, rotate: -8, scale: 1 }}
             transition={{ duration: 0.7, delay: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className="font-mono-accent absolute -right-3 top-6 flex h-24 w-24 items-center justify-center rounded-full bg-[#D96B43] text-center text-[10px] font-bold leading-tight tracking-[0.15em] text-[#FDFBF7] shadow-lg lg:-right-6 lg:h-28 lg:w-28"
+            className="font-mono-accent absolute -right-3 top-6 flex h-24 w-24 items-center justify-center rounded-full bg-[#E6007E] text-center text-[10px] font-bold leading-tight tracking-[0.15em] text-[#FDF7FA] shadow-lg lg:-right-6 lg:h-28 lg:w-28"
             data-testid="hero-badge"
           >
             CHOKE-

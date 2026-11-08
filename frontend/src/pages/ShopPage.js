@@ -28,8 +28,8 @@ export default function ShopPage() {
   return (
     <main data-testid="shop-page" className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:py-20">
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="mb-10">
-        <p className="font-mono-accent mb-3 text-xs tracking-[0.3em] text-[#D96B43]">THE FULL COLLECTION</p>
-        <h1 className="font-serif-display text-4xl font-semibold tracking-tight text-[#1C2A39] sm:text-5xl">
+        <p className="font-mono-accent mb-3 text-xs tracking-[0.3em] text-[#E6007E]">THE FULL COLLECTION</p>
+        <h1 className="font-serif-display text-4xl font-semibold tracking-tight text-[#3E2A33] sm:text-5xl">
           Every piece, gently made
         </h1>
       </motion.div>
@@ -42,8 +42,8 @@ export default function ShopPage() {
             onClick={() => setParams(f === "All" ? {} : { category: f })}
             className={`rounded-full border px-5 py-2.5 text-sm font-semibold transition-colors ${
               active === f
-                ? "border-[#1C2A39] bg-[#1C2A39] text-[#FDFBF7]"
-                : "border-[#1C2A39]/20 text-[#1C2A39] hover:border-[#D96B43] hover:text-[#D96B43]"
+                ? "border-[#3E2A33] bg-[#3E2A33] text-[#FDF7FA]"
+                : "border-[#3E2A33]/20 text-[#3E2A33] hover:border-[#E6007E] hover:text-[#E6007E]"
             }`}
           >
             {f}

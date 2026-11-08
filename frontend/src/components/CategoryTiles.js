@@ -54,7 +54,7 @@ function GlitchImage({ frames, alt, active }) {
       setFrame(0);
       return;
     }
-    const id = setInterval(() => setFrame((f) => (f + 1) % frames.length), 150);
+    const id = setInterval(() => setFrame((f) => (f + 1) % frames.length), 450);
     return () => clearInterval(id);
   }, [active, frames.length]);
 
@@ -66,7 +66,7 @@ function GlitchImage({ frames, alt, active }) {
           src={src}
           alt={i === 0 ? alt : ""}
           loading="lazy"
-          className={`absolute inset-0 h-full w-full object-cover ${i === frame ? "opacity-100" : "opacity-0"} ${
+          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-300 ease-out ${i === frame ? "opacity-100" : "opacity-0"} ${
             !active && i === 0 ? "transition-transform duration-700 ease-out group-hover:scale-105" : ""
           }`}
         />
@@ -92,17 +92,17 @@ function CategoryTile({ cat, index }) {
         onMouseEnter={() => setActive(true)}
         onMouseLeave={() => setActive(false)}
       >
-        <div className="relative aspect-[3/4] overflow-hidden rounded-3xl bg-[#F4EFEA]" data-testid={`category-glitch-${cat.name.toLowerCase().replace(/\s+/g, "-")}`}>
+        <div className="relative aspect-[3/4] overflow-hidden rounded-3xl bg-[#FBEEF4]" data-testid={`category-glitch-${cat.name.toLowerCase().replace(/\s+/g, "-")}`}>
           <GlitchImage frames={cat.frames} alt={cat.name} active={active} />
-          <div className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-[#FDFBF7] text-[#1C2A39] opacity-0 shadow-md transition-opacity duration-300 group-hover:opacity-100">
+          <div className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-[#FDF7FA] text-[#3E2A33] opacity-0 shadow-md transition-opacity duration-300 group-hover:opacity-100">
             <ArrowUpRight className="h-4 w-4" />
           </div>
         </div>
-        <h3 className="font-serif-display mt-5 text-xl font-semibold text-[#1C2A39] transition-colors group-hover:text-[#D96B43]">
+        <h3 className="font-serif-display mt-5 text-xl font-semibold text-[#3E2A33] transition-colors group-hover:text-[#E6007E]">
           {cat.name}
         </h3>
         <p className="mt-1.5 text-sm leading-relaxed text-[#5A6572]">{cat.blurb}</p>
-        <span className="mt-3 inline-block text-sm font-semibold text-[#D96B43]">
+        <span className="mt-3 inline-block text-sm font-semibold text-[#E6007E]">
           Shop {cat.name.toLowerCase()} →
         </span>
       </Link>
@@ -120,8 +120,8 @@ export default function CategoryTiles() {
         transition={{ duration: 0.7 }}
         className="mb-12 max-w-xl"
       >
-        <p className="font-mono-accent mb-3 text-xs tracking-[0.3em] text-[#D96B43]">THE COLLECTION</p>
-        <h2 className="font-serif-display text-3xl font-semibold tracking-tight text-[#1C2A39] sm:text-4xl">
+        <p className="font-mono-accent mb-3 text-xs tracking-[0.3em] text-[#E6007E]">THE COLLECTION</p>
+        <h2 className="font-serif-display text-3xl font-semibold tracking-tight text-[#3E2A33] sm:text-4xl">
           Shop our signature pieces
         </h2>
         <p className="mt-4 text-base leading-relaxed text-[#5A6572] sm:text-lg">
