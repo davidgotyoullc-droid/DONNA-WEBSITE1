@@ -17,6 +17,12 @@ An original, award-tier e-commerce storefront for Donna Devlin Designs (handcraf
 - Boutique gift buyer drawn to whimsical prints and craft.
 - Wholesale stockist using the enquiry form.
 
+## Constraints to keep (from Bifrost fix, 2026-11-08)
+- The promo pop-up only appears on `/` and only once per session (sessionStorage key `ddd_promo_dismissed`); it opens ~1.5s after homepage load. The demo campaign is now ENABLED with coupon PUPLOVE15 (PUPLOVE15 is a display-only example — no checkout discount logic exists for it).
+- `/admin` is the management screen the user asked for — never remove it or turn it into the pop-up.
+- The contact section and footer both stay brown (#3E2A33), with a blush (#FDF7FA) gap between them (64px mobile / 80px tablet / 96px desktop, added in HomePage.js); footer's thin pink top line kept as accent.
+- If the live site was published before 2026-11-08 v6, its campaign is still off (seed only applies to empty DBs) — enable it via /admin on the live site after publishing.
+
 ## Implemented (2026-11-08, v5)
 - Footer rebranded to full-width brand brown (#3E2A33) with pink top edge, cream text/links, preserved content + newsletter.
 - Nav: "Home" added as first item (scrolls to top when already on /); active-page indication (pink + underline) on desktop and mobile menus.

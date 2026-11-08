@@ -45,6 +45,8 @@ export default function HomePage() {
       <Testimonials />
       <CommunityStrip />
       <ContactForm />
+      {/* Blush breathing room so the brown contact block and brown footer read as separate */}
+      <div aria-hidden="true" data-testid="contact-footer-gap" className="h-16 bg-[#FDF7FA] sm:h-20 lg:h-24" />
     </main>
   );
 }

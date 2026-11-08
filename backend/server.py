@@ -211,13 +211,13 @@ PRODUCTS = [
 ]
 
 DEMO_PROMO = {
-    "enabled": False,
+    "enabled": True,
     "headline": "A Little Something Special for Your Pup!",
     "description": "Discover our latest designs and exclusive offers, thoughtfully created for comfort, style, and happier walks.",
     "image_url": "/images/products/garden-party-vest-b.webp",
     "cta_text": "Explore Our Collection",
     "cta_link": "/shop",
-    "coupon_code": "",
+    "coupon_code": "PUPLOVE15",
     "start_at": None,
     "end_at": None,
 }
@@ -266,7 +266,7 @@ async def seed_promotion() -> None:
     if await db.promotions.count_documents({}) == 0:
         doc = {**DEMO_PROMO, "updated_at": datetime.now(timezone.utc).isoformat()}
         await db.promotions.insert_one(doc)
-        logging.getLogger(__name__).info("Seeded demo promotion (disabled)")
+        logging.getLogger(__name__).info("Seeded demo promotion")
 
 app = FastAPI()
 api_router = APIRouter(prefix="/api")

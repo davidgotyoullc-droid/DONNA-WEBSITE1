@@ -19,7 +19,7 @@ export default function PromoPopup() {
       .then(({ data }) => {
         if (data && data.enabled) {
           setPromo(data);
-          timer = setTimeout(() => setOpen(true), 5000);
+          timer = setTimeout(() => setOpen(true), 1500);
         }
       })
       .catch(() => {});
