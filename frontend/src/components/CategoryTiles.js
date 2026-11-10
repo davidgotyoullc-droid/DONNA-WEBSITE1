@@ -38,10 +38,8 @@ const CATEGORIES = [
     name: "Matching Leashes",
     blurb: "Coordinated leads that complete every set beautifully.",
     frames: [
-      "/images/products/coastal-leash-a.webp",
-      "/images/products/coastal-leash-b.webp",
-      "/images/products/coastal-leash-c.webp",
-      "/images/products/coastal-leash-d.webp",
+      "/images/brand/leash-ladybug.webp",
+      "/images/brand/leash-ladybug-zoom.webp",
     ],
   },
 ];

@@ -23,6 +23,12 @@ An original, award-tier e-commerce storefront for Donna Devlin Designs (handcraf
 - The contact section and footer both stay brown (#3E2A33), with a blush (#FDF7FA) gap between them (64px mobile / 80px tablet / 96px desktop, added in HomePage.js); footer's thin pink top line kept as accent.
 - If the live site was published before 2026-11-08 v6, its campaign is still off (seed only applies to empty DBs) — enable it via /admin on the live site after publishing.
 
+## Implemented (2026-11-10, v7)
+- Product cards now auto-play like the reference site's animated GIFs: every card gently cycles its photo frames on its own (1.4s crossfade, no hover needed); hover still reveals Quick view.
+- Ladybug leash photo (user-supplied, enhanced) added everywhere leashes appear: Matching Leashes tile, product listing renamed "The Ladybug Lane Leash" ($42, Mongo + seed + Stripe setup), Our Products page, Admin promo image picker, and its review line.
+- Founder portrait (user-supplied, 4x enhanced) now shows in the home Our Story section and the About page.
+- Reviews glide sped up: 100s → 65s loop (~0.65x), still pauses on hover.
+
 ## Implemented (2026-11-10, v6)
 - Real Donna Devlin product photos (user-supplied, enhanced/upscaled/sharpened to WebP in /images/brand/): hero big frame = red paw-print vest cycling with plaid vest (same 750ms crossfade motion), small frame = red paw-print collar; collection tiles use real photos (vests, harness, collars) with the glitch hover intact; catalog products renamed/remapped to the real line (Paw Parade Vest $58, Fresh Meadow Harness $52, Paw Parade Collar $34, Highlands Vest $58, Woodland Camo Collar $34, Coastal Leash unchanged) in Mongo + seed + setup_stripe.py.
 - Reviews rebuilt as an exact Google-review-style card layout (avatar initial circle, name, stars + time, text, customer photo, purchased-product line; Roboto type, #FBBC04 stars) on a continuous auto-gliding track (~0.41x speed, 100s loop, pauses on hover).

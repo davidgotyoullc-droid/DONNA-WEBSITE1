@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Star } from "lucide-react";
@@ -6,7 +7,15 @@ import { formatPrice } from "@/lib/api";
 
 export default function ProductCard({ product, index = 0 }) {
   const { setQuickView } = useCart();
+  const [frame, setFrame] = useState(0);
+  const frames = [product.images.main, product.images.hover].filter(Boolean);
   const tag = product.tags?.includes("best_seller") ? "Best Seller" : product.tags?.includes("new_arrival") ? "New In" : null;
+
+  useEffect(() => {
+    if (frames.length < 2) return undefined;
+    const id = setInterval(() => setFrame((f) => (f + 1) % frames.length), 1400);
+    return () => clearInterval(id);
+  }, [frames.length]);
 
   return (
     <motion.article
@@ -17,20 +26,19 @@ export default function ProductCard({ product, index = 0 }) {
       className="group w-[270px] shrink-0 snap-start sm:w-[300px]"
       data-testid={`product-card-${product.slug}`}
     >
-      <div className="relative aspect-square overflow-hidden rounded-3xl bg-[#FBEEF4]">
+      <div className="relative aspect-square overflow-hidden rounded-3xl bg-white">
         <Link to={`/product/${product.slug}`} data-testid={`product-link-${product.slug}`} aria-label={product.name}>
-          <img
-            src={product.images.main}
-            alt={product.name}
-            loading="lazy"
-            className="absolute inset-0 h-full w-full object-cover transition-opacity duration-500 group-hover:opacity-0"
-          />
-          <img
-            src={product.images.hover}
-            alt={`${product.name} on a dog`}
-            loading="lazy"
-            className="absolute inset-0 h-full w-full scale-105 object-cover opacity-0 transition-all duration-500 group-hover:scale-100 group-hover:opacity-100"
-          />
+          {frames.map((src, i) => (
+            <img
+              key={src}
+              src={src}
+              alt={i === 0 ? product.name : `${product.name} detail`}
+              loading="lazy"
+              className={`absolute inset-0 h-full w-full object-contain p-5 transition-opacity duration-700 ease-in-out ${
+                i === frame ? "opacity-100" : "opacity-0"
+              }`}
+            />
+          ))}
         </Link>
         {tag && (
           <span

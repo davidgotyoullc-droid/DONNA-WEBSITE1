@@ -36,7 +36,7 @@ const TYPES = [
     description:
       "Beautifully coordinated 5-foot leashes in the same prints and palettes as our vests and collars — soft in the hand, with solid brass swivel clasps that never tangle.",
     features: ["5 ft length, two widths", "Solid brass swivel clasp", "Matches every print in the collection"],
-    images: ["/images/products/coastal-leash-b.webp", "/images/products/coastal-leash-c.webp"],
+    images: ["/images/brand/leash-ladybug.webp", "/images/brand/leash-ladybug-zoom.webp"],
     to: "/shop?category=Matching%20Leashes",
   },
 ];

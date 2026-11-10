@@ -16,7 +16,7 @@ CATALOG = [
     {"slug": "garden-party-walking-vest", "name": "The Garden Party Walking Vest", "lookup_key": "garden_party_vest", "amount": 5800},
     {"slug": "scotland-yard-step-in-harness", "name": "The Scotland Yard Step-In Harness", "lookup_key": "scotland_yard_harness", "amount": 5200},
     {"slug": "daisy-chain-designer-collar", "name": "The Daisy Chain Designer Collar", "lookup_key": "daisy_chain_collar", "amount": 3400},
-    {"slug": "coastal-stripe-leash", "name": "The Coastal Stripe Leash", "lookup_key": "coastal_stripe_leash", "amount": 4200},
+    {"slug": "coastal-stripe-leash", "name": "The Ladybug Lane Leash", "lookup_key": "coastal_stripe_leash", "amount": 4200},
     {"slug": "cherry-picnic-walking-vest", "name": "The Cherry Picnic Walking Vest", "lookup_key": "cherry_picnic_vest", "amount": 5800},
     {"slug": "polka-wisp-step-in-harness", "name": "The Woodland Camo Designer Collar", "lookup_key": "polka_wisp_harness", "amount": 3400},
 ]

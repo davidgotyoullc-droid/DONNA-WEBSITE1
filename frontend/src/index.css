@@ -169,7 +169,7 @@
     to { transform: translateX(-50%); }
 }
 .animate-reviews-glide {
-    animation: reviews-glide-kf 100s linear infinite;
+    animation: reviews-glide-kf 65s linear infinite;
 }
 .reviews-glide-wrap:hover .animate-reviews-glide {
     animation-play-state: paused;

@@ -19,7 +19,7 @@ export default function BrandStory() {
         <div className="relative">
           <motion.div style={{ y }} className="overflow-hidden rounded-[2rem] border-8 border-white shadow-2xl shadow-[#3E2A33]/15">
             <img
-              src="/images/story/donna-founder.jpg"
+              src="/images/brand/founder.webp"
               alt="Donna Devlin, founder and designer"
               loading="lazy"
               className="aspect-[4/5] w-full object-cover"

@@ -118,7 +118,7 @@ export default function AboutPage() {
             transition={{ duration: 0.7 }}
             className="mx-auto w-full max-w-sm overflow-hidden rounded-[2rem] border-8 border-white/10 shadow-2xl"
           >
-            <img src="/images/story/donna-founder.jpg" alt="Donna Devlin, founder and designer" className="aspect-[4/5] w-full object-cover" data-testid="about-donna-photo" />
+            <img src="/images/brand/founder.webp" alt="Donna Devlin, founder and designer" className="aspect-[4/5] w-full object-cover" data-testid="about-donna-photo" />
           </motion.div>
           <motion.div
             initial={{ opacity: 0, y: 24 }}

@@ -13,7 +13,7 @@ const IMAGE_CHOICES = [
   { label: "Scotland Yard harness on pup", url: "/images/products/scotland-yard-harness-b.webp" },
   { label: "Polka Wisp harness on pup", url: "/images/products/polka-wisp-harness-b.webp" },
   { label: "Daisy collar on pup", url: "/images/products/daisy-collar-b.webp" },
-  { label: "Coastal leash on walk", url: "/images/products/coastal-leash-b.webp" },
+  { label: "Ladybug Lane leash", url: "/images/brand/leash-ladybug.webp" },
   { label: "Studio poodle portrait", url: "/images/hero/hero-1.webp" },
   { label: "Dog on the beach", url: "/images/story/dog-on-beach.jpg" },
 ];

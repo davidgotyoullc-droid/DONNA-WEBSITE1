@@ -56,9 +56,9 @@ const REVIEWS = [
     name: "Elena Vasquez",
     pet: "Fig · Shih Tzu",
     time: "3 months ago",
-    product: "The Coastal Stripe Leash",
+    product: "The Ladybug Lane Leash",
     quote:
-      "Light in the hand, soft on the grip, and the stripe matches Fig's whole set. The clasp swivels so smoothly — no more tangled leash mid-walk.",
+      "Light in the hand, soft on the grip, and the ladybugs match Fig's whole set. The clasp swivels so smoothly — no more tangled leash mid-walk.",
     photos: ["/images/reviews/r6.webp"],
     color: "#00838F",
   },
