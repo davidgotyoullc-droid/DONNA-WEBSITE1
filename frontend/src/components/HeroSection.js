@@ -4,12 +4,10 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, Ruler } from "lucide-react";
 
 const FRAMES = [
-  "/images/hero/hero-1.webp",
-  "/images/hero/pose-2.webp",
-  "/images/hero/pose-3.webp",
-  "/images/hero/pose-4.webp",
-  "/images/hero/pose-5.webp",
-  "/images/hero/pose-6.webp",
+  "/images/brand/vest-red.webp",
+  "/images/brand/vest-plaid.webp",
+  "/images/brand/vest-red-zoom.webp",
+  "/images/brand/vest-plaid-zoom.webp",
 ];
 
 const LINES = [
@@ -120,15 +118,15 @@ export default function HeroSection() {
             initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.9, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            className="relative aspect-[4/5] w-full overflow-hidden rounded-[2rem] border-8 border-white shadow-2xl shadow-[#3E2A33]/20"
+            className="relative aspect-[4/5] w-full overflow-hidden rounded-[2rem] border-8 border-white bg-white shadow-2xl shadow-[#3E2A33]/20"
             data-testid="hero-main-frame"
           >
             {FRAMES.map((src, i) => (
               <img
                 key={src}
                 src={src}
-                alt={i === 0 ? "Dog wearing a handcrafted Donna Devlin floral walking vest" : ""}
-                className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ease-in-out ${i === frame ? "opacity-100" : "opacity-0"}`}
+                alt={i === 0 ? "Donna Devlin walking vest in scarlet paw-print cotton" : ""}
+                className={`absolute inset-0 h-full w-full object-contain p-6 transition-opacity duration-500 ease-in-out ${i === frame ? "opacity-100" : "opacity-0"}`}
               />
             ))}
             <span
@@ -148,7 +146,7 @@ export default function HeroSection() {
             className="absolute -bottom-8 -left-4 hidden w-44 overflow-hidden rounded-3xl border-8 border-white shadow-xl shadow-[#3E2A33]/25 sm:block lg:-left-12 lg:w-56"
             data-testid="hero-detail-frame"
           >
-            <img src="/images/hero/hero-3.webp" alt="Hand-stitched cotton detail" className="aspect-square w-full object-cover" />
+            <img src="/images/brand/collar-red.webp" alt="The Paw Parade designer collar" className="aspect-square w-full bg-white object-contain p-4" />
           </motion.div>
 
           <motion.div

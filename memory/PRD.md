@@ -23,6 +23,11 @@ An original, award-tier e-commerce storefront for Donna Devlin Designs (handcraf
 - The contact section and footer both stay brown (#3E2A33), with a blush (#FDF7FA) gap between them (64px mobile / 80px tablet / 96px desktop, added in HomePage.js); footer's thin pink top line kept as accent.
 - If the live site was published before 2026-11-08 v6, its campaign is still off (seed only applies to empty DBs) — enable it via /admin on the live site after publishing.
 
+## Implemented (2026-11-10, v6)
+- Real Donna Devlin product photos (user-supplied, enhanced/upscaled/sharpened to WebP in /images/brand/): hero big frame = red paw-print vest cycling with plaid vest (same 750ms crossfade motion), small frame = red paw-print collar; collection tiles use real photos (vests, harness, collars) with the glitch hover intact; catalog products renamed/remapped to the real line (Paw Parade Vest $58, Fresh Meadow Harness $52, Paw Parade Collar $34, Highlands Vest $58, Woodland Camo Collar $34, Coastal Leash unchanged) in Mongo + seed + setup_stripe.py.
+- Reviews rebuilt as an exact Google-review-style card layout (avatar initial circle, name, stars + time, text, customer photo, purchased-product line; Roboto type, #FBBC04 stars) on a continuous auto-gliding track (~0.41x speed, 100s loop, pauses on hover).
+- NOTE: user-supplied images arrived in a different order than displayed in chat; files were verified visually and renamed to match intent.
+
 ## Implemented (2026-11-08, v5)
 - Footer rebranded to full-width brand brown (#3E2A33) with pink top edge, cream text/links, preserved content + newsletter.
 - Nav: "Home" added as first item (scrolls to top when already on /); active-page indication (pink + underline) on desktop and mobile menus.

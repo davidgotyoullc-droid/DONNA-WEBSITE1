@@ -18,7 +18,7 @@ CATALOG = [
     {"slug": "daisy-chain-designer-collar", "name": "The Daisy Chain Designer Collar", "lookup_key": "daisy_chain_collar", "amount": 3400},
     {"slug": "coastal-stripe-leash", "name": "The Coastal Stripe Leash", "lookup_key": "coastal_stripe_leash", "amount": 4200},
     {"slug": "cherry-picnic-walking-vest", "name": "The Cherry Picnic Walking Vest", "lookup_key": "cherry_picnic_vest", "amount": 5800},
-    {"slug": "polka-wisp-step-in-harness", "name": "The Polka Wisp Step-In Harness", "lookup_key": "polka_wisp_harness", "amount": 5200},
+    {"slug": "polka-wisp-step-in-harness", "name": "The Woodland Camo Designer Collar", "lookup_key": "polka_wisp_harness", "amount": 3400},
 ]
 
 TAX_CODE_PHYSICAL = "txcd_99999999"

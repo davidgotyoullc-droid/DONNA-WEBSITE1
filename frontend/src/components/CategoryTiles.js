@@ -8,30 +8,30 @@ const CATEGORIES = [
     name: "Walking Vests",
     blurb: "Soft, lightweight vests that move pressure from neck to chest.",
     frames: [
-      "/images/products/garden-party-vest-a.webp",
-      "/images/products/garden-party-vest-b.webp",
-      "/images/products/cherry-picnic-vest-a.webp",
-      "/images/products/cherry-picnic-vest-b.webp",
+      "/images/brand/vest-plaid.webp",
+      "/images/brand/vest-red.webp",
+      "/images/brand/vest-plaid-zoom.webp",
+      "/images/brand/vest-red-zoom.webp",
     ],
   },
   {
     name: "Step-In Harnesses",
     blurb: "Choke-free and on in seconds with one-click closures.",
     frames: [
-      "/images/products/scotland-yard-harness-a.webp",
-      "/images/products/scotland-yard-harness-b.webp",
-      "/images/products/polka-wisp-harness-a.webp",
-      "/images/products/polka-wisp-harness-b.webp",
+      "/images/brand/harness-green.webp",
+      "/images/brand/harness-green-zoom.webp",
+      "/images/brand/harness-green.webp",
+      "/images/brand/harness-green-zoom.webp",
     ],
   },
   {
     name: "Designer Collars",
     blurb: "Premium cotton, reinforced for strength, gentle on necks.",
     frames: [
-      "/images/products/daisy-collar-a.webp",
-      "/images/products/daisy-collar-b.webp",
-      "/images/products/daisy-collar-c.webp",
-      "/images/products/daisy-collar-d.webp",
+      "/images/brand/collar-red.webp",
+      "/images/brand/collar-camo.webp",
+      "/images/brand/collar-red-zoom.webp",
+      "/images/brand/collar-camo-zoom.webp",
     ],
   },
   {
@@ -66,7 +66,7 @@ function GlitchImage({ frames, alt, active }) {
           src={src}
           alt={i === 0 ? alt : ""}
           loading="lazy"
-          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-300 ease-out ${i === frame ? "opacity-100" : "opacity-0"} ${
+          className={`absolute inset-0 h-full w-full object-contain p-6 transition-opacity duration-300 ease-out ${i === frame ? "opacity-100" : "opacity-0"} ${
             !active && i === 0 ? "transition-transform duration-700 ease-out group-hover:scale-105" : ""
           }`}
         />
@@ -92,7 +92,7 @@ function CategoryTile({ cat, index }) {
         onMouseEnter={() => setActive(true)}
         onMouseLeave={() => setActive(false)}
       >
-        <div className="relative aspect-[3/4] overflow-hidden rounded-3xl bg-[#FBEEF4]" data-testid={`category-glitch-${cat.name.toLowerCase().replace(/\s+/g, "-")}`}>
+        <div className="relative aspect-[3/4] overflow-hidden rounded-3xl bg-white" data-testid={`category-glitch-${cat.name.toLowerCase().replace(/\s+/g, "-")}`}>
           <GlitchImage frames={cat.frames} alt={cat.name} active={active} />
           <div className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-[#FDF7FA] text-[#3E2A33] opacity-0 shadow-md transition-opacity duration-300 group-hover:opacity-100">
             <ArrowUpRight className="h-4 w-4" />

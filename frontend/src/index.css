@@ -158,3 +158,19 @@
     50% { transform: translateY(2px); }
     100% { transform: translateY(-1px); }
 }
+
+.font-google {
+    font-family: "Roboto", Arial, sans-serif;
+}
+
+/* Reviews: continuous slow glide (~0.41x marquee speed) */
+@keyframes reviews-glide-kf {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+}
+.animate-reviews-glide {
+    animation: reviews-glide-kf 100s linear infinite;
+}
+.reviews-glide-wrap:hover .animate-reviews-glide {
+    animation-play-state: paused;
+}
